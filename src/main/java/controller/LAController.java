@@ -5,6 +5,7 @@
  */
 package controller;
 
+import fachklassen.Hochschule;
 import fachklassen.Kurs;
 import fachklassen.LearningAgreement;
 import fachklassen.Student;
@@ -87,7 +88,19 @@ public class LAController {
     public List<Kurs> getAlleAuslandsKurse() {
         try {
             Query query = em.createNamedQuery("getAlleInlandsKurse");
-            query.setParameter("HeimatHS", "SanDiego"); // Hier die Heimathochschule eintragen!!!!
+            query.setParameter("HeimatHS", "SanDiego"); // Hier die ausgewählte AuslandsHS eintragen!!!!
+            return query.getResultList();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public List<Hochschule> getPartnerHS() {
+        try {
+            Query query = em.createNamedQuery("getPartnerHS");
+            query.setParameter("HeimatHS", "Pforzheim"); // Hier die Heimathochschule eintragen!!!!
             return query.getResultList();
 
         } catch (Exception e) {

@@ -5,8 +5,13 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
+@NamedQueries({
+    @NamedQuery(name="getPartnerHS", query="Select h from Hochschule h where h.name != :HeimatHS")
+ })
 public class Hochschule implements Serializable {
 
     @Id

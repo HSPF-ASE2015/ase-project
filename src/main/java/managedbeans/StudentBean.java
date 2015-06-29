@@ -7,6 +7,7 @@ package managedbeans;
 
 import controller.LAController;
 import controller.StudentController;
+import fachklassen.Hochschule;
 import fachklassen.Kurs;
 import fachklassen.LearningAgreement;
 import fachklassen.LearningAgreement_Pos;
@@ -35,6 +36,7 @@ public class StudentBean implements Serializable {
 //    private long matnr;
     private LearningAgreement la;
     private List<Kurs> alleKurse;
+    private List<Hochschule> partnerHochschulen;
 //    @ManagedBean(value="#{studentBean.student}")
 //    private Student student2;
 
@@ -43,6 +45,14 @@ public class StudentBean implements Serializable {
 
     public List<Kurs> getAlleKurse() {
         return alleKurse;
+    }
+
+    public List<Hochschule> getPartnerHochschulen() {
+        return partnerHochschulen;
+    }
+
+    public void setPartnerHochschulen(List<Hochschule> partnerHochschulen) {
+        this.partnerHochschulen = partnerHochschulen;
     }
 
     public void setAlleKurse(List<Kurs> alleKurse) {
@@ -70,9 +80,12 @@ public class StudentBean implements Serializable {
         try {
             student = studentController.validateLogin(student.getBenutzername(), student.getPasswort());
             if (student != null) {
-                String anzeigeLA = fillLA();
-                return anzeigeLA;
-                //return "learningAgreementAnlegen_1.xhtml";
+                if ( student.getAntrag().isGenehmigt() == false){
+                    return "login_fail.xhtml";
+                } else {
+                String anzeigeLA= fillLA();  
+                return anzeigeLA; 
+                }
             } else {
                 throw new Exception("Passwort oder Benutzername falsch");
             }
@@ -171,6 +184,21 @@ public class StudentBean implements Serializable {
         // Kurswahl im LA speichern      
         la.getLearningAgreement_Liste().add(new LearningAgreement_Pos(inlandskurs, auslandskurs));
         return "learningAgreementAnlegen_1";
+    }
+    
+    public String partnerHSwaehlen(){
+        partnerHochschulen = laController.getPartnerHS();
+        return "hochschul_liste.xhtml";
+    }
+    
+    public String setPartnerHS(){
+        String posId = getRequestParameter("hsId");
+        for (Hochschule h : partnerHochschulen) {
+            if (h.getId1() == Long.parseLong(posId)) {
+                la.setAuslandshochschule(h);
+            }
+        };
+        return "learningAgreementAnlegen_1.xhtml";
     }
 
     public LearningAgreement getLA() {
