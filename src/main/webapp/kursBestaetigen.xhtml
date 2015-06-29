@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Kurspaar bestätigen</title>
+        <link rel="stylesheet" type="text/css" href="basic.css"></link>
+    </h:head>
+
+ <h:body>
+        <h1>Belegte Kurse bestätigen</h1>
+        <hr/>
+        <h:form id="AusleiheErfasen" prependId="true">
+            
+                <h:outputLabel for="nameauslandsKurs" value="Auslandskurs: "/>
+                <h:panelGroup>
+                    <h:outputText value="#{KursBean.name}"/>
+                </h:panelGroup>   
+                <h:panelGrid columns="2">
+                <h:outputLabel for="ects" value="ECTS: "/>
+                 <h:panelGroup>
+                    <h:outputText value="#{KursBean.ects}"/>
+                </h:panelGroup>  
+                <h:panelGroup>
+                    <h:outputLabel value="Note: "/>
+                    <h:panelGroup>
+                        <h:inputText id="auslandsNote" required="true"
+                                 value="#{KursBean.note}"
+                                 requiredMessage="-  Bitte Note eingeben." />
+                    <h:message for="KursNote" errorClass="error" /> 
+                    </h:panelGroup>
+                </h:panelGroup>
+                </h:panelGrid>
+                
+                <br/>
+                <br/>
+                <br/>
+                 <h:outputLabel for="nameinlandsKurs" value="Inlandskurs: "/>
+                <h:panelGroup>
+                    <h:outputText value="#{KursBean.name}"/>
+                </h:panelGroup>   
+                <h:panelGrid columns="2">
+                <h:outputLabel for="inlandects" value="ECTS: "/>
+                <h:panelGroup>
+                    <h:outputText value="#{KursBean.inlandects}"/>
+                </h:panelGroup>  
+                <h:panelGroup>
+                    <h:outputLabel value="Deutsche Note: "/>
+                    <h:panelGroup>
+                        <h:inputText id="inlandsNote" required="true"
+                                 value="#{KursBean.note}"
+                                 requiredMessage="-  Bitte Note eingeben." />
+                    <h:message for="KursNote" errorClass="error" /> 
+                    </h:panelGroup>
+                </h:panelGroup>
+                </h:panelGrid>
+                 <br/>
+                <br/>
+                 <h:commandButton value="Kurse speichern" action="#{LABean.speichernPositionen}"/>
+            </h:form>
+    </h:body>
+</html>
