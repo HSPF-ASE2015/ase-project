@@ -7,7 +7,7 @@ package controller;
 
 import fachklassen.LearningAgreement;
 import fachklassen.Student;
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -16,7 +16,7 @@ import javax.persistence.Query;
  *
  * @author Marcel
  */
-@Stateful
+@Stateless
 public class StudentController {
 
     
@@ -27,15 +27,12 @@ public class StudentController {
     
     public Student validateLogin(String bname, String pw) {
         try {
-            Query query = em.createNamedQuery("getStudent");
+            Query query = em.createNamedQuery("getStudentWithLogin");
             query.setParameter("bname", bname);
+            query.setParameter("pw", pw);
             student = (Student) query.getSingleResult();
-            if (pw.equals(student.getPasswort())){
-                 return student;
-            }else {
-                    return null;
-                    }
-          //  kunde = em.find(Kunde.class, kundenNummer);
+            
+            return student;
             
         } catch (Exception e) {
             e.printStackTrace();

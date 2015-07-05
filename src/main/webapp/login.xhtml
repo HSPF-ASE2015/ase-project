@@ -1,41 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:f="http://java.sun.com/jsf/core"
        xmlns:h="http://java.sun.com/jsf/html">
     <h:head>
         <title>Login</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </h:head>
     <h:body>
-        <h1>    Anmelden</h1>
-        <br/>
-        <h:form id="StudentLogin" prependId="false">
-            <table style="text-align: left; width: 349px; height: 46px;" border="0" cellpadding="0" cellspacing="0">
-  <tbody>
-    <tr>
-      <td><h:outputLabel for="name" value="Benutzername"></h:outputLabel></td>
-      <td><h:inputText id="name" required="true" value="#{studentBean.student.benutzername}"
-                                 requiredMessage=" Bitte Benutzername eingeben"></h:inputText>
-          <h:message for="name" errorClass="error" />
-      </td>
-                  
-      
-    </tr>
-    <tr>
-      <td><h:outputLabel for="passwort" value="Passwort"></h:outputLabel></td>
-      <td><h:inputText id="passwort" required="true" value="#{studentBean.student.passwort}"
-                                 requiredMessage=" Bitte Passwort eingeben"></h:inputText></td>
-      <h:message for="passwort" errorClass="error" />
-    </tr>
-  </tbody>
-</table> 
-            <br></br>
-            <h:commandButton id="mybutton" value="Login" action="#{studentBean.validateStudentLogin(context, component, value)}" ></h:commandButton>
+        <b:container>
+            <b:row>
+                <b:column span="8" offset="2">
+                    <b:panel >
+                        <h1 class="text-center">Learning Agreement</h1>
+                        <p class="text-center">Bitte melden Sie sich an.</p>
+                        <b:row rendered="false" id="login_error">
+                            <b:column span="6" offset="3">
+                                <b:panel look="danger" collapsible="false" title="Anmeldefehler">
+                                    Benutzername oder Passwort falsch.
+                                </b:panel>
+                            </b:column>
+                        </b:row>
+                        <h:form id="StudentLogin" prependId="false">
+                            <b:row>
+                                <b:column span="6" offset="3">
+                            <b:panelGrid colSpans="4,8" >
+                                <h:outputLabel for="name" value="Benutzername" />
+                                <h:panelGroup>
+                                    <b:inputText id="name" required="true" value="#{studentBean.student.benutzername}"
+                                 requiredMessage=" Bitte Benutzername eingeben" />
+                                    <h:message for="name" errorClass="error" />
+                                </h:panelGroup>
+                                <h:outputLabel for="passwort" value="Passwort" />
+                                <h:panelGroup>
+                                    <b:inputSecret id="passwort" required="true" value="#{studentBean.student.passwort}"
+                                 requiredMessage=" Bitte Passwort eingeben" />
+                                    <h:message for="passwort" errorClass="error" />
+                                </h:panelGroup>
+                                
+                            </b:panelGrid>
+                                    <b:commandButton id="login_btn" value="Login" action="#{studentBean.login}" look="primary" />
+                                </b:column>
+                            </b:row>
     </h:form>
+                    </b:panel>
+                </b:column>        
+            </b:row>
+        </b:container>
 </h:body>
 </html>

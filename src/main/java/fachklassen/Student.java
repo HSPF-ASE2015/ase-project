@@ -13,7 +13,8 @@ import javax.persistence.OneToOne;
 @Entity
 @NamedQueries({
     @NamedQuery(name="getAlleStudenten", query="Select s from Student s"),
-    @NamedQuery(name="getStudent", query="Select s from Student s where s.benutzername = :bname")
+    @NamedQuery(name="getStudent", query="Select s from Student s where s.benutzername = :bname"),
+    @NamedQuery(name="getStudentWithLogin", query="Select s from Student s where s.benutzername=:bname and s.passwort=:pw")
  })
 public class Student implements Serializable {
 

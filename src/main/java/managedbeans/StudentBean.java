@@ -16,10 +16,8 @@ import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
+import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
 import javax.inject.Named;
 
 /**
@@ -31,80 +29,41 @@ import javax.inject.Named;
 public class StudentBean implements Serializable {
 
     private Student student;
-//    private String benutzername;
-//    private String passwort;
-//    private long matnr;
+
     private LearningAgreement la;
     private List<Kurs> alleKurse;
     private List<Hochschule> partnerHochschulen;
-//    @ManagedBean(value="#{studentBean.student}")
-//    private Student student2;
 
     private Kurs inlandskurs;
     private Kurs auslandskurs;
-
-    public List<Kurs> getAlleKurse() {
-        return alleKurse;
-    }
-
-    public List<Hochschule> getPartnerHochschulen() {
-        return partnerHochschulen;
-    }
-
-    public void setPartnerHochschulen(List<Hochschule> partnerHochschulen) {
-        this.partnerHochschulen = partnerHochschulen;
-    }
-
-    public void setAlleKurse(List<Kurs> alleKurse) {
-        this.alleKurse = alleKurse;
-    }
 
     @EJB
     private LAController laController;
     @EJB
     private StudentController studentController;
 
-    /**
-     * Creates a new instance of StudentBean
-     */
     public StudentBean() {
         this.student = new Student();
     }
 
-    public String validateStudentLogin(FacesContext context,
-            UIComponent component, Object value) throws ValidatorException, Exception {
-//        benutzername = (String) value;
-//        passwort = (String) value;
-//        matnr = (Long) value;
-
-        try {
-            student = studentController.validateLogin(student.getBenutzername(), student.getPasswort());
-            if (student != null) {
-                if ( student.getAntrag().isGenehmigt() == false){
-                    return "login_fail.xhtml";
-                } else {
-                String anzeigeLA= fillLA();  
-                return anzeigeLA; 
-                }
+    public String login() {
+        student = studentController.validateLogin(student.getBenutzername(), student.getPasswort());
+        if (student != null) {
+            if ( student.getAntrag().isGenehmigt() == false){
+                return "login_fail.xhtml";
             } else {
-                throw new Exception("Passwort oder Benutzername falsch");
+            String anzeigeLA= fillLA();  
+            return anzeigeLA; 
             }
-        } catch (Exception e) { // hier kommt immer null pointer exception, wenn er nichts findet. Liegt wohl an der xhtml!
-            String msg = e.getMessage();
-            FacesMessage fMsg
-                    = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, msg);
-            context.addMessage(component.getClientId(context), fMsg);
-            throw new ValidatorException(fMsg);
+        } else {
+            student = new Student(); // Wenn nach falschem Benutzer die Login Seite erneut angezeigt wird, nimmt er keine neuen Eingaben an.
+            UIViewRoot view = FacesContext.getCurrentInstance().getViewRoot();
+            view.findComponent("login_error").setRendered(true);
+            return null;
         }
+
     }
 
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setKunde(Student student) {
-        this.student = student;
-    }
 
     public String fillLA() {
 
@@ -223,6 +182,30 @@ public class StudentBean implements Serializable {
 
     public void setStudentController(StudentController studentController) {
         this.studentController = studentController;
+    }
+    
+    public List<Kurs> getAlleKurse() {
+        return alleKurse;
+    }
+
+    public List<Hochschule> getPartnerHochschulen() {
+        return partnerHochschulen;
+    }
+
+    public void setPartnerHochschulen(List<Hochschule> partnerHochschulen) {
+        this.partnerHochschulen = partnerHochschulen;
+    }
+
+    public void setAlleKurse(List<Kurs> alleKurse) {
+        this.alleKurse = alleKurse;
+    }
+    
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setKunde(Student student) {
+        this.student = student;
     }
 
 }
