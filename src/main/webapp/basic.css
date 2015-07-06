@@ -1,0 +1,32 @@
+
+
+a
+{
+	color: #333366;
+    text-decoration: underline;
+}
+
+a:hover
+{
+	color: #333366;
+    text-decoration: underline;
+}
+
+.error {
+	color: #FF0000;
+}
+
+.sortLink {
+	color: #333366;
+    text-decoration: none;
+}
+#panel-studierender {
+    height: 211px;
+}
+
+.container {
+    margin-top: 50px;
+}
+h1 {
+    margin-bottom: 30px;
+}

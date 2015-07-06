@@ -36,7 +36,7 @@ public class LAController {
      //   Long id1 = studentBean.getStudent().getAntrag().getId1();
         try {
             Query query = em.createNamedQuery("getLA");
-            query.setParameter("antragid", student.getAntrag().getId1());
+            query.setParameter("antragid", student.getAntrag().getAntragId());
             la = (LearningAgreement) query.getSingleResult();
                  return la;
           //  kunde = em.find(Kunde.class, kundenNummer);
@@ -55,7 +55,7 @@ public class LAController {
         la.getLearningAgreement_Liste().remove(Integer.parseInt(posId) - 1);
         long i;
         for (i = 0; i < la.getAnzahlPositionen(); i++) {
-            la.getLearningAgreement_Liste().get((int)i).setId1(i + 1);
+            la.getLearningAgreement_Liste().get((int)i).setLaPosId(i + 1);
         }
         return la;
     }

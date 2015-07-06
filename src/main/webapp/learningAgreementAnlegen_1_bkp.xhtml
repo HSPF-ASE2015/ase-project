@@ -26,9 +26,9 @@
                                             <h:outputText value="#{studentBean.student.geburtsdatum}"/>
                                             <h:outputLabel value="Geburtsort:"/>
                                             <h:outputText value="#{studentBean.student.geburtsort}"/>
-                                            <h:outputLabel value="Studiengang:"/>
+                                            <h:outputLabel for="studyprogramm" value="Studiengang:"/>
                                             <h:outputText value="#{studentBean.student.studiengang}"/>
-                                            <h:outputLabel value="Fakultät:"/>
+                                            <h:outputLabel for="faculty" value="Fakultät:"/>
                                             <h:outputText value="#{studentBean.student.fakultaet}"/>
                                         </b:panelGrid>
                                     </b:panel>
@@ -37,17 +37,32 @@
                                     <b:panel title="Auslandssemester" collapsible="false">
                                         <b:panelGrid colSpans="4,8">
                                             <h:outputLabel value="Partnerhochschule:"/>
-                                            <h:outputText value="#{studentBean.LA.auslandshochschule.name}" />
+                                            <h:inputText id="institution" required="true"
+                                                 value="#{studentBean.LA.auslandshochschule.name}"
+                                                 requiredMessage=" Bitte Name der Auslandshochschule eingeben"/>
                                             <h:outputLabel value="Semester:"/>
-                                            <h:outputText value="#{studentBean.LA.semester}" />
-                                            <h:outputLabel value="Semesterbeginn:"/>
-                                            <h:outputText value="#{studentBean.LA.startDatum}"/>
-                                            <h:outputLabel value="Semesterende:"/>
-                                            <h:outputText value="#{studentBean.LA.endDatum}" />
+                                            <h:inputText id="periodAbroad" required="true"
+                                                 value="#{studentBean.LA.semester}"
+                                                 requiredMessage="-  Bitte Semester eingeben."/>
+                                            <h:outputLabel value="Datum Semesterbeginn:"/>
+                                            <h:inputText id="startDate" required="true"
+                                                 value="#{studentBean.LA.startDatum}"
+                                                 requiredMessage="-  Bitte Datum eingeben." />
+                                            <h:outputLabel value="Datum Semesterende:"/>
+                                            <h:inputText id="endDate" required="true"
+                                                 value="#{studentBean.LA.endDatum}"
+                                                 requiredMessage="-  Bitte Datum eingeben." />
                                         </b:panelGrid>
                                     </b:panel>
                                 </b:column>    
                             </b:row>
+
+                            <h:panelGrid columns="3">
+                                <h:outputLabel value="Receiving Institution: ">
+                                               
+                                </h:outputLabel>   
+                                <h:commandButton value="HS suchen" action="#{studentBean.partnerHSwaehlen()}"></h:commandButton>
+                            </h:panelGrid>    
 
                             <br/>
                             <h:commandButton value="Kurs hinzufügen"

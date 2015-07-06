@@ -4,27 +4,32 @@ package fachklassen;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
 public class LearningAgreement_Pos implements Serializable {
-
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long laPosId;
+    
     @OneToOne(targetEntity = Kurs.class)
     private Kurs inlands_kurs;
-    @Basic
-    private String note_ausland;
-    @Id
-    private Long id1;
     @OneToOne(targetEntity = Kurs.class)
     private Kurs auslands_kurs;
+    @ManyToOne(targetEntity = LearningAgreement.class)
+    private LearningAgreement learningAgreement;
+    
+    /** TODO Enum? */
+    @Basic
+    private String note_ausland;
     @Basic
     private boolean genehmigt;
     @Basic
     private float note_inland;
-    @ManyToOne(targetEntity = LearningAgreement.class)
-    private LearningAgreement learningAgreement;
 
     public LearningAgreement_Pos() {
 
@@ -51,12 +56,12 @@ public class LearningAgreement_Pos implements Serializable {
         this.note_ausland = note_ausland;
     }
    
-    public Long getId1() {
-        return this.id1;
+    public Long getLaPosId() {
+        return this.laPosId;
     }
 
-    public void setId1(Long id1) {
-        this.id1 = id1;
+    public void setLaPosId(Long laPosId) {
+        this.laPosId = laPosId;
     }
    
     public Kurs getAuslands_kurs() {

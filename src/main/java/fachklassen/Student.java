@@ -17,25 +17,26 @@ import javax.persistence.OneToOne;
     @NamedQuery(name="getStudentWithLogin", query="Select s from Student s where s.benutzername=:bname and s.passwort=:pw")
  })
 public class Student implements Serializable {
-
+    @Id
+    private Long matrikelnr;
+    
+    @OneToOne
+    private Antrag antrag;
+    
     @Basic
-    private String studiengang;
+    private String name;
     @Basic
-    private String passwort;
+    private String geburtsort;
     @Basic
     private Date geburtsdatum;
     @Basic
     private String fakultaet;
     @Basic
-    private String name;
-    @Basic
-    private String geburtsort;
-    @OneToOne(targetEntity = Antrag.class)
-    private Antrag antrag;
-    @Id
-    private Long matrikelnr;
+    private String studiengang;
     @Basic
     private String benutzername;
+    @Basic
+    private String passwort;
 
     public Student() {
 

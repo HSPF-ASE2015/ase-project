@@ -47,16 +47,16 @@ public class StudentBean implements Serializable {
     }
 
     public String login() {
-        student = studentController.validateLogin(student.getBenutzername(), student.getPasswort());
-        if (student != null) {
+        // Login korrekt, dann Antrag prüfen und entsprechende Anzeige zurückgeben
+        if(studentController.validateLogin(student.getBenutzername(), student.getPasswort())) {
+            student=studentController.getStudent();
             if ( student.getAntrag().isGenehmigt() == false){
                 return "login_fail.xhtml";
             } else {
             String anzeigeLA= fillLA();  
             return anzeigeLA; 
             }
-        } else {
-            student = new Student(); // Wenn nach falschem Benutzer die Login Seite erneut angezeigt wird, nimmt er keine neuen Eingaben an.
+        } else { // Login inkorrekt, Fehler anzeigen, gleiche Anzeige schalten
             UIViewRoot view = FacesContext.getCurrentInstance().getViewRoot();
             view.findComponent("login_error").setRendered(true);
             return null;
@@ -117,7 +117,7 @@ public class StudentBean implements Serializable {
 
         //ausgewaehlten Kurs speichern
         for (Kurs k : alleKurse) {
-            if (k.getId1() == Long.parseLong(posId)) {
+            if (k.getKursId() == Long.parseLong(posId)) {
                 inlandskurs = k;
             }
         };
@@ -135,7 +135,7 @@ public class StudentBean implements Serializable {
 
         //ausgewaehlten Kurs speichern
         for (Kurs k : alleKurse) {
-            if (k.getId1() == Long.parseLong(posId)) {
+            if (k.getKursId() == Long.parseLong(posId)) {
                 auslandskurs = k;
             }
         };
@@ -153,7 +153,7 @@ public class StudentBean implements Serializable {
     public String setPartnerHS(){
         String posId = getRequestParameter("hsId");
         for (Hochschule h : partnerHochschulen) {
-            if (h.getId1() == Long.parseLong(posId)) {
+            if (h.getHochschuleId() == Long.parseLong(posId)) {
                 la.setAuslandshochschule(h);
             }
         };

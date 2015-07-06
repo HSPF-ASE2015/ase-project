@@ -4,31 +4,38 @@ package fachklassen;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 @Entity
 public class Antrag implements Serializable {
-
-    @OneToOne(targetEntity = LearningAgreement.class)
-    private LearningAgreement learningAgreement1;
-    @OneToOne(targetEntity = Student.class,mappedBy = "antrag")
-    private Student student;
     @Id
-    private Long id1;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long antragId;
+    
+    @OneToOne(mappedBy = "antrag")
+    private LearningAgreement learningAgreement;
+    @OneToOne(mappedBy = "antrag")
+    private Student student;
+    @OneToOne
+    private Hochschule partnerhochschule;
+
     @Basic
     private boolean genehmigt;
+
 
     public Antrag() {
 
     }
    
-    public LearningAgreement getLearningAgreement1() {
-        return this.learningAgreement1;
+    public LearningAgreement getLearningAgreement() {
+        return this.learningAgreement;
     }
 
-    public void setLearningAgreement1(LearningAgreement learningAgreement1) {
-        this.learningAgreement1 = learningAgreement1;
+    public void setLearningAgreement(LearningAgreement learningAgreement) {
+        this.learningAgreement = learningAgreement;
     }
    
     public Student getStudent() {
@@ -39,12 +46,12 @@ public class Antrag implements Serializable {
         this.student = student;
     }
    
-    public Long getId1() {
-        return this.id1;
+    public Long getAntragId() {
+        return this.antragId;
     }
 
-    public void setId1(Long id1) {
-        this.id1 = id1;
+    public void setAntragId(Long antragId) {
+        this.antragId = antragId;
     }
     
     public boolean isGenehmigt() {
@@ -53,5 +60,12 @@ public class Antrag implements Serializable {
 
     public void setGenehmigt(boolean genehmigt) {
         this.genehmigt = genehmigt;
+    }
+    public Hochschule getPartnerhochschule() {
+        return partnerhochschule;
+    }
+
+    public void setPartnerhochschule(Hochschule partnerhochschule) {
+        this.partnerhochschule = partnerhochschule;
     }
 }

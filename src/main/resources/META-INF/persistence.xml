@@ -3,6 +3,8 @@
   <persistence-unit name="LearningAgreement_web2PU" transaction-type="JTA">
     <jta-data-source>learningagreement2</jta-data-source>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
-    <properties/>
+    <properties>
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+    </properties>
   </persistence-unit>
 </persistence>

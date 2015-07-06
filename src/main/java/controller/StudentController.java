@@ -5,39 +5,45 @@
  */
 package controller;
 
-import fachklassen.LearningAgreement;
 import fachklassen.Student;
-import javax.ejb.Stateless;
+import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-/**
- *
- * @author Marcel
- */
-@Stateless
+@Singleton
 public class StudentController {
 
     
     @PersistenceContext
     private EntityManager em;
     private Student student;
-    private LearningAgreement la;
     
-    public Student validateLogin(String bname, String pw) {
+    public Boolean validateLogin(String bname, String pw) {
         try {
             Query query = em.createNamedQuery("getStudentWithLogin");
             query.setParameter("bname", bname);
             query.setParameter("pw", pw);
             student = (Student) query.getSingleResult();
             
-            return student;
+            return (student!=null);
             
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return false;
         }
+    }
+
+    public StudentController() {
+        this.student = new Student();
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
     }
     
 }

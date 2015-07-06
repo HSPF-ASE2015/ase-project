@@ -4,6 +4,8 @@ package fachklassen;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -15,7 +17,9 @@ import javax.persistence.NamedQuery;
 public class Hochschule implements Serializable {
 
     @Id
-    private Long id1;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Long hochschuleId;
+
     @Basic
     private String name;
 
@@ -23,12 +27,12 @@ public class Hochschule implements Serializable {
 
     }
    
-    public Long getId1() {
-        return this.id1;
+    public Long getHochschuleId() {
+        return this.hochschuleId;
     }
 
-    public void setId1(Long id1) {
-        this.id1 = id1;
+    public void setHochschuleId(Long hochschuleId) {
+        this.hochschuleId = hochschuleId;
     }
    
     public String getName() {
