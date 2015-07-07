@@ -27,20 +27,12 @@ public class LearningAgreement implements Serializable {
     private Long learningAgreementId;
 
     @OneToMany(mappedBy = "learningAgreement", cascade = CascadeType.ALL)
-    private List<LearningAgreement_Pos> learningAgreement_Liste;
+    private List<LearningAgreementPosition> learningAgreementPositionen;
     @OneToOne
     private Antrag antrag;
-    @OneToOne
-    private Hochschule auslandshochschule;
     
     @Basic
     private int gesamtCredits;
-    @Basic
-    private String semester;
-    @Basic
-    private String startDatum;
-    @Basic
-    private String endDatum;
     @Basic
     private String ausstellDatum;
 
@@ -48,24 +40,17 @@ public class LearningAgreement implements Serializable {
 
     }
 
-    public String getEndDatum() {
-        return this.endDatum;
-    }
 
-    public void setEndDatum(String endDatum) {
-        this.endDatum = endDatum;
-    }
-
-    public List<LearningAgreement_Pos> getLearningAgreement_Liste() {
-        return this.learningAgreement_Liste;
+    public List<LearningAgreementPosition> getLearningAgreementPositionen() {
+        return this.learningAgreementPositionen;
     }
 
     public int getAnzahlPositionen() {
-        return learningAgreement_Liste.size();
+        return learningAgreementPositionen.size();
     }
 
-    public void setLearningAgreement_Liste(List<LearningAgreement_Pos> learningAgreement_Liste) {
-        this.learningAgreement_Liste = learningAgreement_Liste;
+    public void setLearningAgreementPositionen(List<LearningAgreementPosition> learningAgreementPositionen) {
+        this.learningAgreementPositionen = learningAgreementPositionen;
     }
 
     public int getGesamtCredits() {
@@ -84,21 +69,6 @@ public class LearningAgreement implements Serializable {
         this.learningAgreementId = learningAgreementId;
     }
 
-    public String getSemester() {
-        return this.semester;
-    }
-
-    public void setSemester(String semester) {
-        this.semester = semester;
-    }
-
-    public String getStartDatum() {
-        return this.startDatum;
-    }
-
-    public void setStartDatum(String startDatum) {
-        this.startDatum = startDatum;
-    }
 
     public String getAusstellDatum() {
         return this.ausstellDatum;
@@ -114,13 +84,5 @@ public class LearningAgreement implements Serializable {
 
     public void setAntrag(Antrag antrag) {
         this.antrag = antrag;
-    }
-
-    public Hochschule getAuslandshochschule() {
-        return this.auslandshochschule;
-    }
-
-    public void setAuslandshochschule(Hochschule auslandshochschule) {
-        this.auslandshochschule = auslandshochschule;
     }
 }

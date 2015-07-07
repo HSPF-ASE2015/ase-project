@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 @Entity
-public class LearningAgreement_Pos implements Serializable {
+public class LearningAgreementPosition implements Serializable {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long laPosId;
@@ -31,11 +31,11 @@ public class LearningAgreement_Pos implements Serializable {
     @Basic
     private float note_inland;
 
-    public LearningAgreement_Pos() {
+    public LearningAgreementPosition() {
 
     }
 
-    public LearningAgreement_Pos(Kurs inlands_kurs, Kurs auslands_kurs) {
+    public LearningAgreementPosition(Kurs inlands_kurs, Kurs auslands_kurs) {
         this.inlands_kurs = inlands_kurs;
         this.auslands_kurs = auslands_kurs;
     }

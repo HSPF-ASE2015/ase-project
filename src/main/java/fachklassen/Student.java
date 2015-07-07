@@ -24,7 +24,9 @@ public class Student implements Serializable {
     private Antrag antrag;
     
     @Basic
-    private String name;
+    private String vorname;
+    @Basic
+    private String nachname;
     @Basic
     private String geburtsort;
     @Basic
@@ -73,14 +75,23 @@ public class Student implements Serializable {
     public void setFakultaet(String fakultaet) {
         this.fakultaet = fakultaet;
     }
-   
-    public String getName() {
-        return this.name;
+
+    public String getVorname() {
+        return vorname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setVorname(String vorname) {
+        this.vorname = vorname;
     }
+
+    public String getNachname() {
+        return nachname;
+    }
+
+    public void setNachname(String nachname) {
+        this.nachname = nachname;
+    }
+
    
     public String getGeburtsort() {
         return this.geburtsort;

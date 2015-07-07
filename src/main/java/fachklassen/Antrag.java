@@ -23,6 +23,12 @@ public class Antrag implements Serializable {
     private Hochschule partnerhochschule;
 
     @Basic
+    private String semester;
+    @Basic
+    private String startDatum;
+    @Basic
+    private String endDatum;
+    @Basic
     private boolean genehmigt;
 
 
@@ -68,4 +74,29 @@ public class Antrag implements Serializable {
     public void setPartnerhochschule(Hochschule partnerhochschule) {
         this.partnerhochschule = partnerhochschule;
     }
+
+    public String getSemester() {
+        return semester;
+    }
+
+    public void setSemester(String semester) {
+        this.semester = semester;
+    }
+
+    public String getStartDatum() {
+        return startDatum;
+    }
+
+    public void setStartDatum(String startDatum) {
+        this.startDatum = startDatum;
+    }
+
+    public String getEndDatum() {
+        return endDatum;
+    }
+
+    public void setEndDatum(String endDatum) {
+        this.endDatum = endDatum;
+    }
+    
 }

@@ -20,9 +20,9 @@ import javax.persistence.Query;
  * @author Marcel
  */
 @Stateful
-public class LAController {
+public class LearningAgreementController {
 
-    public LAController() {
+    public LearningAgreementController() {
     }
 
     
@@ -52,10 +52,10 @@ public class LAController {
     }
     
     public LearningAgreement loeschenLAposition(String posId, LearningAgreement la) {
-        la.getLearningAgreement_Liste().remove(Integer.parseInt(posId) - 1);
+        la.getLearningAgreementPositionen().remove(Integer.parseInt(posId) - 1);
         long i;
         for (i = 0; i < la.getAnzahlPositionen(); i++) {
-            la.getLearningAgreement_Liste().get((int)i).setLaPosId(i + 1);
+            la.getLearningAgreementPositionen().get((int)i).setLaPosId(i + 1);
         }
         return la;
     }

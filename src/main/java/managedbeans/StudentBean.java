@@ -1,16 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package managedbeans;
 
-import controller.LAController;
+import controller.LearningAgreementController;
 import controller.StudentController;
 import fachklassen.Hochschule;
 import fachklassen.Kurs;
 import fachklassen.LearningAgreement;
-import fachklassen.LearningAgreement_Pos;
+import fachklassen.LearningAgreementPosition;
 import fachklassen.Student;
 import java.io.Serializable;
 import java.util.List;
@@ -38,7 +33,7 @@ public class StudentBean implements Serializable {
     private Kurs auslandskurs;
 
     @EJB
-    private LAController laController;
+    private LearningAgreementController laController;
     @EJB
     private StudentController studentController;
 
@@ -53,8 +48,9 @@ public class StudentBean implements Serializable {
             if ( student.getAntrag().isGenehmigt() == false){
                 return "login_fail.xhtml";
             } else {
-            String anzeigeLA= fillLA();  
-            return anzeigeLA; 
+//                String anzeigeLA= fillLA();  
+//                return anzeigeLA; 
+                return "antraegeAnzeigen";
             }
         } else { // Login inkorrekt, Fehler anzeigen, gleiche Anzeige schalten
             UIViewRoot view = FacesContext.getCurrentInstance().getViewRoot();
@@ -141,7 +137,7 @@ public class StudentBean implements Serializable {
         };
 
         // Kurswahl im LA speichern      
-        la.getLearningAgreement_Liste().add(new LearningAgreement_Pos(inlandskurs, auslandskurs));
+        la.getLearningAgreementPositionen().add(new LearningAgreementPosition(inlandskurs, auslandskurs));
         return "learningAgreementAnlegen_1";
     }
     
@@ -154,7 +150,7 @@ public class StudentBean implements Serializable {
         String posId = getRequestParameter("hsId");
         for (Hochschule h : partnerHochschulen) {
             if (h.getHochschuleId() == Long.parseLong(posId)) {
-                la.setAuslandshochschule(h);
+                la.getAntrag().setPartnerhochschule(h);
             }
         };
         return "learningAgreementAnlegen_1.xhtml";
@@ -168,11 +164,11 @@ public class StudentBean implements Serializable {
         this.la = la;
     }
 
-    public LAController getLaController() {
+    public LearningAgreementController getLaController() {
         return laController;
     }
 
-    public void setLaController(LAController laController) {
+    public void setLaController(LearningAgreementController laController) {
         this.laController = laController;
     }
 
