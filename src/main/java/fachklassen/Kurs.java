@@ -35,7 +35,8 @@ public class Kurs implements Serializable {
 
     }
     
-    public Kurs(int ects, String name, String sprache, Hochschule hochschule){
+    public Kurs(Long kursId, int ects, String name, String sprache, Hochschule hochschule){
+        this.kursId = kursId;
         this.ects = ects;
         this.name = name;
         this.sprache = sprache;
