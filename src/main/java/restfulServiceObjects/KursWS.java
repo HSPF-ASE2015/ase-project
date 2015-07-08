@@ -17,16 +17,19 @@ public class KursWS implements Serializable{
     private int ects;
     private String name;
     private String sprache;
+    private String hochschule;
+    
     private String errorKurs;
     
     public KursWS(){
     }
     
-    public KursWS(Long kursId, int ects, String name, String sprache){
+    public KursWS(Long kursId, int ects, String name, String sprache, String hochschule){
         this.kursId = kursId;
         this.ects = ects;
         this.name = name;
         this.sprache = sprache;
+        this.hochschule = hochschule;
     }
     
     public Long getKursId() {
@@ -67,6 +70,14 @@ public class KursWS implements Serializable{
 
     public void setErrorKurs(String errorKurs) {
         this.errorKurs = errorKurs;
+    }
+    
+    public String getHochschule() {
+        return hochschule;
+    }
+
+    public void setHochschule(String hochschule) {
+        this.hochschule = hochschule;
     }
     
 }
