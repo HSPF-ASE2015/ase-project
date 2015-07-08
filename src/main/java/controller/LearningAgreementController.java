@@ -21,25 +21,21 @@ import javax.persistence.Query;
  */
 @Stateful
 public class LearningAgreementController {
-
-    public LearningAgreementController() {
-    }
-
     
     @PersistenceContext
     private EntityManager em;
     private Student student;
-    private LearningAgreement la;
+    private LearningAgreement learningAgreement;
 
+    public LearningAgreementController() {
+    }
     
-    public LearningAgreement getLA(Student student) {
-     //   Long id1 = studentBean.getStudent().getAntrag().getId1();
+    public LearningAgreement getLearningAgreement(Student student) {
         try {
             Query query = em.createNamedQuery("getLA");
             query.setParameter("antragid", student.getAntrag().getAntragId());
-            la = (LearningAgreement) query.getSingleResult();
-                 return la;
-          //  kunde = em.find(Kunde.class, kundenNummer);
+            learningAgreement = (LearningAgreement) query.getSingleResult();
+            return learningAgreement;
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -47,11 +43,17 @@ public class LearningAgreementController {
         }
     }
     
-    public void speichereLA (LearningAgreement la){
-        em.persist(la);
+    public LearningAgreement erstelleLearningAgreement(Student student) {
+        learningAgreement = new LearningAgreement(student.getAntrag());
+        speichereLearningAgreement();
+        return learningAgreement;
     }
     
-    public LearningAgreement loeschenLAposition(String posId, LearningAgreement la) {
+    public void speichereLearningAgreement (){
+        em.persist(learningAgreement);
+    }
+    
+    public LearningAgreement loescheLearningAgreementPosition(String posId, LearningAgreement la) {
         la.getLearningAgreementPositionen().remove(Integer.parseInt(posId) - 1);
         long i;
         for (i = 0; i < la.getAnzahlPositionen(); i++) {

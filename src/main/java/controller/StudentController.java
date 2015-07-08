@@ -7,11 +7,13 @@ package controller;
 
 import fachklassen.Student;
 import javax.ejb.Singleton;
+import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 @Singleton
+@Stateful
 public class StudentController {
 
     
@@ -35,7 +37,6 @@ public class StudentController {
     }
 
     public StudentController() {
-        this.student = new Student();
     }
 
     public Student getStudent() {

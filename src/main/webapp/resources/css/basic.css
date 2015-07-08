@@ -27,14 +27,15 @@ a:hover
 .container {
     margin-top: 50px;
 }
-h1 {
+.container .panel h1 {
     margin-bottom: 30px;
+    display: inline-block;
 }
 .panel {
     margin-bottom: 30px;
 }
 
 #btn_logout {
-    position: absolute;
-    right: 0;
+    float: right;
+    margin-top: 25px;
 }
