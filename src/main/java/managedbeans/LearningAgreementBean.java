@@ -132,6 +132,30 @@ public class LearningAgreementBean implements Serializable {
     public void setLearningAgreement(LearningAgreement learningAgreement) {
         this.learningAgreement = learningAgreement;
     }
+
+    public List<Kurs> getAlleKurse() {
+        return alleKurse;
+    }
+
+    public void setAlleKurse(List<Kurs> alleKurse) {
+        this.alleKurse = alleKurse;
+    }
+
+    public Kurs getInlandskurs() {
+        return inlandskurs;
+    }
+
+    public void setInlandskurs(Kurs inlandskurs) {
+        this.inlandskurs = inlandskurs;
+    }
+
+    public Kurs getAuslandskurs() {
+        return auslandskurs;
+    }
+
+    public void setAuslandskurs(Kurs auslandskurs) {
+        this.auslandskurs = auslandskurs;
+    }
     
     
 }
