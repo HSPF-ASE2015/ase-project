@@ -108,7 +108,7 @@ public class LearningAgreementController {
         for(KursWS kursWS : kurseWS){
             
             if(kursWS.getErrorKurs() == null){
-                kurseDB.add(new Kurs(kursWS.getEcts(), kursWS.getName(), kursWS.getSprache(), partnerHochschule));
+                kurseDB.add(new Kurs(kursWS.getKursId(), kursWS.getEcts(), kursWS.getName(), kursWS.getSprache(), partnerHochschule));
             } else {
                 // TODO: error: exception?
             }
