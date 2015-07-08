@@ -2,6 +2,7 @@ package managedbeans;
 
 import controller.LearningAgreementController;
 import controller.StudentController;
+import fachklassen.Antrag;
 import fachklassen.Hochschule;
 import fachklassen.Kurs;
 import fachklassen.LearningAgreement;
@@ -24,6 +25,7 @@ import javax.inject.Named;
 public class StudentBean implements Serializable {
 
     private Student student;
+    private Antrag antrag;
 
     private LearningAgreement la;
     private List<Kurs> alleKurse;
@@ -45,21 +47,26 @@ public class StudentBean implements Serializable {
         // Login korrekt, dann Antrag prüfen und entsprechende Anzeige zurückgeben
         if(studentController.validateLogin(student.getBenutzername(), student.getPasswort())) {
             student=studentController.getStudent();
-            if ( student.getAntrag().isGenehmigt() == false){
-                return "login_fail.xhtml";
-            } else {
+//            if ( student.getAntrag().isGenehmigt() == false){
+//                return "login_fail.xhtml";
+//            } else {
 //                String anzeigeLA= fillLA();  
 //                return anzeigeLA; 
                 return "antraegeAnzeigen";
-            }
+//            }
         } else { // Login inkorrekt, Fehler anzeigen, gleiche Anzeige schalten
             UIViewRoot view = FacesContext.getCurrentInstance().getViewRoot();
             view.findComponent("login_error").setRendered(true);
             return null;
         }
-
     }
 
+    public String logout() {
+        student = new Student();
+        antrag  = new Antrag();
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "login";
+    }
 
     public String fillLA() {
 
@@ -202,6 +209,14 @@ public class StudentBean implements Serializable {
 
     public void setKunde(Student student) {
         this.student = student;
+    }
+
+    public Antrag getAntrag() {
+        return antrag;
+    }
+
+    public void setAntrag(Antrag antrag) {
+        this.antrag = antrag;
     }
 
 }

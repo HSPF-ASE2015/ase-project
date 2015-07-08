@@ -30,3 +30,11 @@ a:hover
 h1 {
     margin-bottom: 30px;
 }
+.panel {
+    margin-bottom: 30px;
+}
+
+#btn_logout {
+    position: absolute;
+    right: 0;
+}
