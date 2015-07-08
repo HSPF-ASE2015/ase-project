@@ -55,9 +55,8 @@ public class LearningAgreementBean implements Serializable {
     }
 
     public void speichereLearningAgreement() {
-        //Hier erst das LA mti den aktuellen Daten aus der Weboberfläche füllen. Das geht aber iwie nicht?!!?
-        //FacesContext.getCurrentInstance().renderResponse();
         learningAgreementController.speichereLearningAgreement();
+        FacesContext.getCurrentInstance().renderResponse();
     }
 
     public void loeschePosition() {

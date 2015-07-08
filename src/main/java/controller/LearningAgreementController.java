@@ -20,11 +20,13 @@ import javax.persistence.Query;
 import restfulServiceObjects.KursRESTServiceClient;
 import restfulServiceObjects.KursWS;
 import java.lang.reflect.Type;
+import javax.ejb.Singleton;
 
 /**
  *
  * @author Marcel
  */
+@Singleton
 @Stateful
 public class LearningAgreementController {
     
@@ -51,12 +53,12 @@ public class LearningAgreementController {
     
     public LearningAgreement erstelleLearningAgreement(Student student) {
         learningAgreement = new LearningAgreement(student.getAntrag());
-        speichereLearningAgreement();
+        em.persist(learningAgreement);
         return learningAgreement;
     }
     
     public void speichereLearningAgreement (){
-        em.persist(learningAgreement);
+        em.merge(learningAgreement);
     }
     
     public LearningAgreement loescheLearningAgreementPosition(String posId, LearningAgreement la) {
