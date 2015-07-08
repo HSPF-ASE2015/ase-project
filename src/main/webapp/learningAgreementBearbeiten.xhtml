@@ -21,7 +21,7 @@
                                     <b:panel title="Studierender" collapsible="false" id="panel-studierender">
                                         <b:panelGrid colSpans="5,7">
                                             <h:outputLabel value="Name:"/>
-                                            <h:outputText value="#{studentBean.student.name}"/>
+                                            <h:panelGroup><h:outputText value="#{studentBean.student.vorname} "/><h:outputText value="#{studentBean.student.nachname}"/></h:panelGroup>
                                             <h:outputLabel value="Geburtsdatum:"/>
                                             <h:outputText value="#{studentBean.student.geburtsdatum}"/>
                                             <h:outputLabel value="Geburtsort:"/>
@@ -37,13 +37,13 @@
                                     <b:panel title="Auslandssemester" collapsible="false">
                                         <b:panelGrid colSpans="4,8">
                                             <h:outputLabel value="Partnerhochschule:"/>
-                                            <h:outputText value="#{studentBean.LA.auslandshochschule.name}" />
+                                            <h:outputText value="#{studentBean.student.antrag.partnerhochschule.name}" />
                                             <h:outputLabel value="Semester:"/>
-                                            <h:outputText value="#{studentBean.LA.semester}" />
+                                            <h:outputText value="#{studentBean.student.antrag.semester}" />
                                             <h:outputLabel value="Semesterbeginn:"/>
-                                            <h:outputText value="#{studentBean.LA.startDatum}"/>
+                                            <h:outputText value="#{studentBean.student.antrag.startDatum}"/>
                                             <h:outputLabel value="Semesterende:"/>
-                                            <h:outputText value="#{studentBean.LA.endDatum}" />
+                                            <h:outputText value="#{studentBean.student.antrag.endDatum}" />
                                         </b:panelGrid>
                                     </b:panel>
                                 </b:column>    
@@ -51,10 +51,10 @@
 
                             <br/>
                             <h:commandButton value="Kurs hinzufügen"
-                                             action="#{studentBean.kursHinzufuegen()}"/>
+                                             action="#{learningAgreementBean.kursHinzufuegen()}"/>
                             <br/>
                             <h:dataTable border="1" 
-                                         value="#{studentBean.LA.learningAgreementPositionen}"
+                                         value="#{learningAgreementBean.learningAgreement.learningAgreementPositionen}"
                                          var="position"        
                                          columnClasses="standardTable_ColumnCentered,  standardTable_ColumnCentered,
                                          standardTable_ColumnRight, standardTable_ColumnRight">
@@ -106,7 +106,7 @@
                                     <f:facet name="header">
                                         <h:outputText value="Bearbeiten"/>
                                     </f:facet>
-                                    <h:commandLink action="#{studentBean.loeschen()}"
+                                    <h:commandLink action="#{learningAgreementBean.loeschePosition()}"
                                                    immediate="true">
                                         <h:outputText value="Löschen"/>
                                         <f:param name="posId" value="#{position.laPosId}"/>
@@ -115,7 +115,7 @@
                             </h:dataTable>
                             <br/>
                             <h:commandButton value="Learning Agreement speichern"
-                                             action="#{studentBean.speichernLA()}"
+                                             action="#{learningAgreementBean.speichereLearningAgreement()}"
                                              immediate="true"/>
 
                             <br/>
@@ -125,7 +125,7 @@
                             <br/>
                             <br/>
                             <h:commandButton value="Beenden"
-                                             action="#{LABean.beenden}"
+                                             action="#{studentBean.logout()}"
                                              immediate="true"/>
 
                         </h:form>

@@ -39,7 +39,9 @@ public class LearningAgreement implements Serializable {
     public LearningAgreement() {
 
     }
-
+    public LearningAgreement(Antrag antrag) {
+        this.antrag = antrag;
+    }
 
     public List<LearningAgreementPosition> getLearningAgreementPositionen() {
         return this.learningAgreementPositionen;
