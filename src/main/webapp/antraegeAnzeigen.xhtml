@@ -1,4 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition template="/WEB-INF/templates/masterTemplate.xhtml" xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:define name="title">Antrag Auslandssemester</ui:define>
+    <ui:define name="content"></ui:define>
+</ui:composition>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:b="http://bootsfaces.net/ui"
@@ -9,53 +13,53 @@
         <link rel="stylesheet" type="text/css" href="basic.css"></link>
     </h:head>
     <h:body>
-        <b:container>
-            <b:row>
-                <b:column span="8" offset="2">
-                    <b:panel>
-                        <h1>Anträge</h1>
-                        <b:commandButton id="btn_logout" value="Logout" action="#{studentBean.logout}" look="danger"/>
-                        <b:row>
-                            <b:column span="12">
-                                <b:panel title="Studierender" collapsible="false">
-                                    <b:panelGrid colSpans="2,2,2,2,2,2">
-                                        <h:outputLabel value="Name:"/>
-                                        <h:panelGroup><h:outputText value="#{studentBean.student.vorname} "/><h:outputText value="#{studentBean.student.nachname}"/></h:panelGroup>
-                                        <h:outputLabel value="Geburtsdatum:"/>
-                                        <h:outputText value="#{studentBean.student.geburtsdatum}"/>
-                                        <h:outputLabel value="Geburtsort:"/>
-                                        <h:outputText value="#{studentBean.student.geburtsort}"/>
-                                        <h:outputLabel value="Studiengang:"/>
-                                        <h:outputText value="#{studentBean.student.studiengang}"/>
-                                        <h:outputLabel value="Fakultät:"/>
-                                        <h:outputText value="#{studentBean.student.fakultaet}"/>
-                                    </b:panelGrid>
-                                </b:panel>
-                            </b:column>
-                        </b:row>
-                        <b:row>
-                            <b:column span="12">
-                                <b:panel title="Antrag" collapsible="false">
-                                    <b:panelGrid colSpans="4,8">
-                                        <h:outputLabel value="Partnerhochschule:"/>
-                                        <h:outputText value="#{studentBean.antrag.partnerhochschule.name}" />
-                                        <h:outputLabel value="Semester:"/>
-                                        <h:outputText value="#{studentBean.antrag.semester}" />
-                                        <h:outputLabel value="Semesterbeginn:"/>
-                                        <h:outputText value="#{studentBean.antrag.startDatum}"/>
-                                        <h:outputLabel value="Semesterende:"/>
-                                        <h:outputText value="#{studentBean.antrag.endDatum}" />
-                                    </b:panelGrid>
-                                    <h:form id="la_anlegen" prependId="false">
+        <h:form id="antraegeAnzeigenForm" prependId="false">
+            <b:container>
+                <b:row>
+                    <b:column span="8" offset="2">
+                        <b:panel>
+                            <h1>Anträge</h1>
+                            <b:commandButton id="btn_logout" value="Logout" action="#{studentBean.logout}" look="danger"/>
+                            <b:row>
+                                <b:column span="12">
+                                    <b:panel title="Studierender" collapsible="false">
+                                        <b:panelGrid colSpans="2,2,2,2,2,2">
+                                            <h:outputLabel value="Name:"/>
+                                            <h:panelGroup><h:outputText value="#{studentBean.student.vorname} "/><h:outputText value="#{studentBean.student.nachname}"/></h:panelGroup>
+                                            <h:outputLabel value="Geburtsdatum:"/>
+                                            <h:outputText value="#{studentBean.student.geburtsdatum}"/>
+                                            <h:outputLabel value="Geburtsort:"/>
+                                            <h:outputText value="#{studentBean.student.geburtsort}"/>
+                                            <h:outputLabel value="Studiengang:"/>
+                                            <h:outputText value="#{studentBean.student.studiengang}"/>
+                                            <h:outputLabel value="Fakultät:"/>
+                                            <h:outputText value="#{studentBean.student.fakultaet}"/>
+                                        </b:panelGrid>
+                                    </b:panel>
+                                </b:column>
+                                <b:column span="12">
+                                    <b:panel title="Antrag" collapsible="false">
+                                        <b:panelGrid colSpans="4,8">
+                                            <h:outputLabel value="Partnerhochschule:"/>
+                                            <h:outputText value="#{studentBean.antrag.partnerhochschule.name}" />
+                                            <h:outputLabel value="Semester:"/>
+                                            <h:outputText value="#{studentBean.antrag.semester}" />
+                                            <h:outputLabel value="Semesterbeginn:"/>
+                                            <h:outputText value="#{studentBean.antrag.startDatum}"/>
+                                            <h:outputLabel value="Semesterende:"/>
+                                            <h:outputText value="#{studentBean.antrag.endDatum}" />
+                                        </b:panelGrid>
+
                                         <b:commandButton value="Learning Agreement anlegen" look="success" />
                                         <b:commandButton value="Learning Agreement bearbeiten" look="warning" />
-                                    </h:form>
-                                </b:panel>
-                            </b:column>
-                        </b:row>
-                    </b:panel>
-                </b:column>
-            </b:row>
-        </b:container>
+
+                                    </b:panel>
+                                </b:column>
+                            </b:row>
+                        </b:panel>
+                    </b:column>
+                </b:row>
+            </b:container>
+        </h:form>
     </h:body>
 </html>
