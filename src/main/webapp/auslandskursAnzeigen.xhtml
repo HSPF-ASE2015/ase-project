@@ -13,7 +13,7 @@
         <hr/>
         <h:form id="AusleiheErfasen" prependId="true">
         <h:dataTable border="1" 
-                     value="#{studentBean.alleKurse}"
+                     value="#{learningAgreementBean.alleKurse}"
                          var="position"
                          columnClasses="standardTable_ColumnCentered,  standardTable_ColumnCentered,
                          standardTable_ColumnRight, standardTable_ColumnRight">
@@ -41,10 +41,10 @@
                     <f:facet name="header">
                         <h:outputText value="Auswahl"/>
                     </f:facet>
-                       <h:commandLink action="#{studentBean.kursWahlspeichern_2()}"
+                    <h:commandLink action="#{learningAgreementBean.kursWahlspeichern_2()}"
                                    immediate="true">
                         <h:outputText value="Auswählen"/>
-                        <f:param name="kursId" value="#{position.id1}"/>
+                        <f:param name="kursId" value="#{position.kursId}"/>
                     </h:commandLink>
                 </h:column>
              </h:dataTable>
