@@ -17,6 +17,7 @@ public class KursWS implements Serializable{
     private int ects;
     private String name;
     private String sprache;
+    private String errorKurs;
     
     public KursWS(){
     }
@@ -58,6 +59,14 @@ public class KursWS implements Serializable{
 
     public void setSprache(String sprache) {
         this.sprache = sprache;
+    }
+    
+    public String getErrorKurs() {
+        return errorKurs;
+    }
+
+    public void setErrorKurs(String errorKurs) {
+        this.errorKurs = errorKurs;
     }
     
 }
