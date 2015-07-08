@@ -34,6 +34,13 @@ public class Kurs implements Serializable {
     public Kurs() {
 
     }
+    
+    public Kurs(int ects, String name, String sprache, Hochschule hochschule){
+        this.ects = ects;
+        this.name = name;
+        this.sprache = sprache;
+        this.hochschule = hochschule;
+    }
    
     public int getEcts() {
         return this.ects;
