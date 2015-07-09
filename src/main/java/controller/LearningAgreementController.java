@@ -75,7 +75,6 @@ public class LearningAgreementController {
         for(LearningAgreementPosition laPos : laPosen){
             
             if(laPos.getLaPosId().compareTo(Long.parseLong(posId)) == 0){
-                System.out.println("Remove PosId: "+posId+" / At Idx: "+idx);
                 laPosen.remove(idx);
                 break;
             }
@@ -83,18 +82,14 @@ public class LearningAgreementController {
         }
         
         la.setLearningAgreementPositionen(laPosen);
-//        
-//        long i;
-//        for (i = 0; i < la.getAnzahlPositionen(); i++) {
-//            la.getLearningAgreementPositionen().get((int)i).setLaPosId(i + 1);
-//        }
+
         return la;
     }
     
      public List<Kurs> getAlleInlandsKurse () {
         try {
-            Query query = em.createNamedQuery("getAlleInlandsKurse");
-            query.setParameter("HeimatHS", "Pforzheim"); // Hier die Heimathochschule eintragen!!!!
+            Query query = em.createNamedQuery("getKurseFromHs");
+            query.setParameter("HS", "Pforzheim"); // Hier die Heimathochschule eintragen!!!!
             return query.getResultList();
 
         } catch (Exception e) {
@@ -103,7 +98,7 @@ public class LearningAgreementController {
         }
     }
      
-        public Kurs getKurs (Long posId) {
+    public Kurs getKurs (Long posId) {
         try {
             Query query = em.createNamedQuery("getKurs");
             query.setParameter("wahlKurs", posId);
@@ -116,28 +111,46 @@ public class LearningAgreementController {
     }
 
        
-    public List<Kurs> getAlleAuslandsKurse(/* Hochschule partnerHochschule*/) {
-        Hochschule partnerHochschule = new Hochschule(); // wird später in die FUnktion als Parameter übergeben
-        
-        Type listType = new TypeToken<ArrayList<KursWS>>() {}.getType();
+    public List<Kurs> getAlleAuslandsKurse() {
+        Hochschule partnerHochschule = learningAgreement.getAntrag().getPartnerhochschule();
+        List<Kurs> auslandsKurse; 
+        try {
+            
+            auslandsKurse = getKurseFromDatabase(partnerHochschule);
+            if(!auslandsKurse.isEmpty()){
+                return auslandsKurse;
+            } else {
+                updateKurseFromWebservice(partnerHochschule);
+                return getKurseFromDatabase(partnerHochschule);
+            }
+            
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    private List<Kurs> getKurseFromDatabase(Hochschule partnerHochschule){
+        Query query = em.createNamedQuery("getKurseFromHs");
+        query.setParameter("HS", partnerHochschule.getName());
+        return query.getResultList();
+    }
+    
+    private void updateKurseFromWebservice(Hochschule partnerHochschule){
         KursRESTServiceClient kursRESTServiceClient = new KursRESTServiceClient();
         String kurseString = kursRESTServiceClient.findAll(String.class); 
+        
+        Type listType = new TypeToken<ArrayList<KursWS>>() {}.getType();
         List<KursWS> kurseWS = new Gson().fromJson(kurseString, listType);
         
-        List<Kurs> kurseDB = new ArrayList<>();
-        
-        for(KursWS kursWS : kurseWS){
-            
+        for(KursWS kursWS : kurseWS){           
             if(kursWS.getErrorKurs() == null){
-                kurseDB.add(new Kurs(kursWS.getKursId(), kursWS.getEcts(), kursWS.getName(), kursWS.getSprache(), partnerHochschule));
+                em.persist(new Kurs(kursWS.getEcts(), kursWS.getName(), kursWS.getSprache(), partnerHochschule));
             } else {
-                // TODO: error: exception?
+                // TODO: Some what error handling -> throw exception
             }
-        }
-       
-        kursRESTServiceClient.close();
-        
-        return kurseDB;
+        }     
+        kursRESTServiceClient.close();       
     }
 
     public List<Hochschule> getPartnerHS() {

@@ -43,11 +43,7 @@
         
         <h:commandButton value="Kurs hinzufügen"
                          action="#{learningAgreementBean.kursHinzufuegen()}"/>
-        <br/>
-        <h:selectOneMenu value="">
-            <f:selectItems value="#{learningAgreementBean.alleKurse}" var="kurs"
-                           itemLabel="#{kurs.name}" itemValue="#{kurs.kursId}" />
-   		</h:selectOneMenu>
+        <br/>       
         <br/>
         <h:dataTable border="1" 
                      value="#{learningAgreementBean.learningAgreement.learningAgreementPositionen}"

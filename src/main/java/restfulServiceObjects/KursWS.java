@@ -13,7 +13,6 @@ import java.io.Serializable;
  */
 public class KursWS implements Serializable{
     
-    private Long kursId;
     private int ects;
     private String name;
     private String sprache;
@@ -24,20 +23,12 @@ public class KursWS implements Serializable{
     public KursWS(){
     }
     
-    public KursWS(Long kursId, int ects, String name, String sprache, String hochschule){
-        this.kursId = kursId;
+    public KursWS(int ects, String name, String sprache, String hochschule){
+
         this.ects = ects;
         this.name = name;
         this.sprache = sprache;
         this.hochschule = hochschule;
-    }
-    
-    public Long getKursId() {
-        return kursId;
-    }
-
-    public void setKursId(Long kursId) {
-        this.kursId = kursId;
     }
 
     public int getEcts() {

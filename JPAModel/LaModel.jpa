@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<jpa:entity-mappings jaxb-support="false" id="_14364742414231" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_1.xsd" xmlns:java="http://jcp.org/en/jsr/detail?id=270" xmlns:jpa="http://java.sun.com/xml/ns/persistence/orm" xmlns:ns4="http://nbmodeler.java.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <jpa:entity class="Antrag" compositePrimaryKeyType="NONE" jaxb-root-element="false" static-metamodel="false" visibile="true" minimized="false" id="_14364742414524">
+        <jpa:attributes>
+            <jpa:id name="antragId" attribute-type="java.lang.Long" visibile="true" id="_14364742414657">
+                <jpa:generated-value strategy="IDENTITY"/>
+            </jpa:id>
+            <jpa:basic name="semester" attribute-type="java.lang.String" visibile="true" id="_14364742414679"/>
+            <jpa:basic name="startDatum" attribute-type="java.lang.String" visibile="true" id="_143647424146710"/>
+            <jpa:basic name="endDatum" attribute-type="java.lang.String" visibile="true" id="_143647424146711"/>
+            <jpa:one-to-one name="learningAgreement" target-entity="LearningAgreement" mapped-by="antrag" primaryKey="false" connected-entity-id="_143647424149021" connected-attribute-id="_143647424149326" visibile="true" id="_14364742414605"/>
+            <jpa:one-to-one name="student" target-entity="Student" mapped-by="antrag" primaryKey="false" connected-entity-id="_143647424151934" connected-attribute-id="_143647424151942" visibile="true" id="_14364742414636"/>
+            <jpa:one-to-one name="partnerhochschule" target-entity="Hochschule" primaryKey="false" connected-entity-id="_143647424147412" visibile="true" id="_14364742414668"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="Hochschule" compositePrimaryKeyType="NONE" jaxb-root-element="false" static-metamodel="false" visibile="true" minimized="false" id="_143647424147412">
+        <jpa:named-query name="getPartnerHS">
+            <jpa:query>Select h from Hochschule h where h.name != :HeimatHS</jpa:query>
+        </jpa:named-query>
+        <jpa:attributes>
+            <jpa:id name="hochschuleId" attribute-type="java.lang.Long" visibile="true" id="_143647424147513">
+                <jpa:generated-value strategy="IDENTITY"/>
+            </jpa:id>
+            <jpa:basic name="name" attribute-type="java.lang.String" visibile="true" id="_143647424147514"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="Kurs" compositePrimaryKeyType="NONE" jaxb-root-element="false" static-metamodel="false" visibile="true" minimized="false" id="_143647424148115">
+        <jpa:named-query name="getAlleInlandsKurse">
+            <jpa:query>Select k from Kurs k where k.hochschule.name = :HeimatHS</jpa:query>
+        </jpa:named-query>
+        <jpa:named-query name="getKurs">
+            <jpa:query>Select k from Kurs k where k.kursId = :wahlKurs</jpa:query>
+        </jpa:named-query>
+        <jpa:attributes>
+            <jpa:id name="kursId" attribute-type="java.lang.Long" visibile="true" id="_143647424148117">
+                <jpa:generated-value strategy="IDENTITY"/>
+            </jpa:id>
+            <jpa:basic name="ects" attribute-type="int" visibile="true" id="_143647424148116"/>
+            <jpa:basic name="name" attribute-type="java.lang.String" visibile="true" id="_143647424148118"/>
+            <jpa:basic name="sprache" attribute-type="java.lang.String" visibile="true" id="_143647424148119"/>
+            <jpa:one-to-one name="hochschule" target-entity="Hochschule" primaryKey="false" connected-entity-id="_143647424147412" visibile="true" id="_143647424148120"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="LearningAgreement" compositePrimaryKeyType="NONE" jaxb-root-element="false" static-metamodel="false" visibile="true" minimized="false" id="_143647424149021">
+        <jpa:named-query name="getLA">
+            <jpa:query>Select l from LearningAgreement l where l.antrag.antragId = :antragid</jpa:query>
+        </jpa:named-query>
+        <jpa:attributes>
+            <jpa:id name="learningAgreementId" attribute-type="java.lang.Long" visibile="true" id="_143647424149324">
+                <jpa:generated-value strategy="IDENTITY"/>
+            </jpa:id>
+            <jpa:basic name="gesamtCredits" attribute-type="int" visibile="true" id="_143647424149323"/>
+            <jpa:basic name="ausstellDatum" attribute-type="java.lang.String" visibile="true" id="_143647424149325"/>
+            <jpa:one-to-many name="learningAgreementPositionen" target-entity="LearningAgreementPosition" mapped-by="learningAgreement" collection-type="java.util.List" connected-entity-id="_143647424150127" connected-attribute-id="_143647424150233" visibile="true" id="_143647424149122">
+                <jpa:cascade>
+                    <jpa:cascade-all/>
+                </jpa:cascade>
+            </jpa:one-to-many>
+            <jpa:one-to-one name="antrag" target-entity="Antrag" primaryKey="false" connected-entity-id="_14364742414524" connected-attribute-id="_14364742414605" visibile="true" id="_143647424149326"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="LearningAgreementPosition" compositePrimaryKeyType="NONE" jaxb-root-element="false" static-metamodel="false" visibile="true" minimized="false" id="_143647424150127">
+        <jpa:attributes>
+            <jpa:id name="laPosId" attribute-type="java.lang.Long" visibile="true" id="_143647424150130">
+                <jpa:generated-value strategy="IDENTITY"/>
+            </jpa:id>
+            <jpa:basic name="note_ausland" attribute-type="java.lang.String" visibile="true" id="_143647424150129"/>
+            <jpa:basic name="note_inland" attribute-type="float" visibile="true" id="_143647424150132"/>
+            <jpa:many-to-one name="learningAgreement" target-entity="LearningAgreement" primaryKey="false" connected-entity-id="_143647424149021" connected-attribute-id="_143647424149122" visibile="true" id="_143647424150233"/>
+            <jpa:one-to-one name="inlands_kurs" target-entity="Kurs" primaryKey="false" connected-entity-id="_143647424148115" visibile="true" id="_143647424150128"/>
+            <jpa:one-to-one name="auslands_kurs" target-entity="Kurs" primaryKey="false" connected-entity-id="_143647424148115" visibile="true" id="_143647424150131"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:entity class="Student" compositePrimaryKeyType="NONE" jaxb-root-element="false" static-metamodel="false" visibile="true" minimized="false" id="_143647424151934">
+        <jpa:named-query name="getAlleStudenten">
+            <jpa:query>Select s from Student s</jpa:query>
+        </jpa:named-query>
+        <jpa:named-query name="getStudent">
+            <jpa:query>Select s from Student s where s.benutzername = :bname</jpa:query>
+        </jpa:named-query>
+        <jpa:named-query name="getStudentWithLogin">
+            <jpa:query>Select s from Student s where s.benutzername=:bname and s.passwort=:pw</jpa:query>
+        </jpa:named-query>
+        <jpa:attributes>
+            <jpa:id name="matrikelnr" attribute-type="java.lang.Long" visibile="true" id="_143647424151943"/>
+            <jpa:basic name="studiengang" attribute-type="java.lang.String" visibile="true" id="_143647424151935"/>
+            <jpa:basic name="passwort" attribute-type="java.lang.String" visibile="true" id="_143647424151936"/>
+            <jpa:basic name="geburtsdatum" attribute-type="java.sql.Date" visibile="true" id="_143647424151937"/>
+            <jpa:basic name="fakultaet" attribute-type="java.lang.String" visibile="true" id="_143647424151938"/>
+            <jpa:basic name="vorname" attribute-type="java.lang.String" visibile="true" id="_143647424151939"/>
+            <jpa:basic name="nachname" attribute-type="java.lang.String" visibile="true" id="_143647424151940"/>
+            <jpa:basic name="geburtsort" attribute-type="java.lang.String" visibile="true" id="_143647424151941"/>
+            <jpa:basic name="benutzername" attribute-type="java.lang.String" visibile="true" id="_143647424151944"/>
+            <jpa:one-to-one name="antrag" target-entity="Antrag" primaryKey="false" connected-entity-id="_14364742414524" connected-attribute-id="_14364742414636" visibile="true" id="_143647424151942"/>
+        </jpa:attributes>
+    </jpa:entity>
+    <jpa:diagram id="_14364742414262">
+        <plane elementRef="_14364742414231" id="_14364742414283_p">
+            <shape elementRef="_14364742414524" id="_14364742414524_gui">
+                <Bounds x="671.0" y="334.0" width="166.0" height="201.0"/>
+            </shape>
+            <shape elementRef="_143647424147412" id="_143647424147412_gui">
+                <Bounds x="310.0" y="167.0" width="167.0" height="88.0"/>
+            </shape>
+            <shape elementRef="_143647424148115" id="_143647424148115_gui">
+                <Bounds x="20.0" y="136.0" width="128.0" height="161.0"/>
+            </shape>
+            <shape elementRef="_143647424149021" id="_143647424149021_gui">
+                <Bounds x="224.0" y="561.0" width="224.0" height="161.0"/>
+            </shape>
+            <shape elementRef="_143647424150127" id="_143647424150127_gui">
+                <Bounds x="568.0" y="617.0" width="269.0" height="181.0"/>
+            </shape>
+            <shape elementRef="_143647424151934" id="_143647424151934_gui">
+                <Bounds x="958.0" y="255.0" width="144.0" height="261.0"/>
+            </shape>
+        </plane>
+    </jpa:diagram>
+</jpa:entity-mappings>

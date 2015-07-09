@@ -7,7 +7,7 @@
     <ui:define name="title">Kurs der Partnerhochschule wählen</ui:define>
     <ui:define name="content">
         <h:dataTable border="1" 
-                     value="#{learningAgreementBean.alleKurse}"
+                     value="#{learningAgreementBean.auslandsKurse}"
                          var="position"
                          columnClasses="standardTable_ColumnCentered,  standardTable_ColumnCentered,
                          standardTable_ColumnRight, standardTable_ColumnRight">
@@ -35,7 +35,7 @@
                     <f:facet name="header">
                         <h:outputText value="Auswahl"/>
                     </f:facet>
-                    <h:commandLink action="#{learningAgreementBean.kursWahlspeichern_2()}"
+                    <h:commandLink action="#{learningAgreementBean.auslandkursWaehlen()}"
                                    immediate="true">
                         <h:outputText value="Auswählen"/>
                         <f:param name="kursId" value="#{position.kursId}"/>

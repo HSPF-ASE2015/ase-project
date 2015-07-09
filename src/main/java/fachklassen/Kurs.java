@@ -13,7 +13,7 @@ import javax.persistence.OneToOne;
 
 @Entity
 @NamedQueries({
-    @NamedQuery(name="getAlleInlandsKurse", query="Select k from Kurs k where k.hochschule.name = :HeimatHS"),
+    @NamedQuery(name="getKurseFromHs", query="Select k from Kurs k where k.hochschule.name = :HS"),
         @NamedQuery(name="getKurs", query="Select k from Kurs k where k.kursId = :wahlKurs")
  })
 public class Kurs implements Serializable {
@@ -35,8 +35,7 @@ public class Kurs implements Serializable {
 
     }
     
-    public Kurs(Long kursId, int ects, String name, String sprache, Hochschule hochschule){
-        this.kursId = kursId;
+    public Kurs(int ects, String name, String sprache, Hochschule hochschule){
         this.ects = ects;
         this.name = name;
         this.sprache = sprache;
