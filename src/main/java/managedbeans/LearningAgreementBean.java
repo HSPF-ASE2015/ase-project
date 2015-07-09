@@ -28,6 +28,7 @@ public class LearningAgreementBean implements Serializable {
     private List<Kurs> alleKurse;
     private Kurs inlandskurs;
     private Kurs auslandskurs;
+   
     
     @EJB
     private StudentController studentController;
@@ -111,7 +112,7 @@ public class LearningAgreementBean implements Serializable {
         };
 
         // Kurswahl im LA speichern      
-        learningAgreement.getLearningAgreementPositionen().add(new LearningAgreementPosition(inlandskurs, auslandskurs));
+        learningAgreement.getLearningAgreementPositionen().add(new LearningAgreementPosition(inlandskurs, auslandskurs, learningAgreement));
         return "learningAgreementBearbeiten";
     }
     

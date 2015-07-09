@@ -10,6 +10,7 @@ import com.google.gson.reflect.TypeToken;
 import fachklassen.Hochschule;
 import fachklassen.Kurs;
 import fachklassen.LearningAgreement;
+import fachklassen.LearningAgreementPosition;
 import fachklassen.Student;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ import restfulServiceObjects.KursRESTServiceClient;
 import restfulServiceObjects.KursWS;
 import java.lang.reflect.Type;
 import javax.ejb.Singleton;
+import javax.persistence.NoResultException;
 
 /**
  *
@@ -38,6 +40,7 @@ public class LearningAgreementController {
     public LearningAgreementController() {
     }
     
+    @SuppressWarnings("CallToPrintStackTrace")
     public LearningAgreement getLearningAgreement(Student student) {
         try {
             Query query = em.createNamedQuery("getLA");
@@ -45,7 +48,10 @@ public class LearningAgreementController {
             learningAgreement = (LearningAgreement) query.getSingleResult();
             return learningAgreement;
             
-        } catch (Exception e) {
+        } catch (NoResultException ex) {
+            return null;
+            
+        } catch (Exception e){
             e.printStackTrace();
             return null;
         }
@@ -62,11 +68,26 @@ public class LearningAgreementController {
     }
     
     public LearningAgreement loescheLearningAgreementPosition(String posId, LearningAgreement la) {
-        la.getLearningAgreementPositionen().remove(Integer.parseInt(posId) - 1);
-        long i;
-        for (i = 0; i < la.getAnzahlPositionen(); i++) {
-            la.getLearningAgreementPositionen().get((int)i).setLaPosId(i + 1);
+        
+        int idx = 0;
+        List<LearningAgreementPosition> laPosen = la.getLearningAgreementPositionen();
+        
+        for(LearningAgreementPosition laPos : laPosen){
+            
+            if(laPos.getLaPosId().compareTo(Long.parseLong(posId)) == 0){
+                System.out.println("Remove PosId: "+posId+" / At Idx: "+idx);
+                laPosen.remove(idx);
+                break;
+            }
+            idx ++;
         }
+        
+        la.setLearningAgreementPositionen(laPosen);
+//        
+//        long i;
+//        for (i = 0; i < la.getAnzahlPositionen(); i++) {
+//            la.getLearningAgreementPositionen().get((int)i).setLaPosId(i + 1);
+//        }
         return la;
     }
     
@@ -117,16 +138,6 @@ public class LearningAgreementController {
         kursRESTServiceClient.close();
         
         return kurseDB;
-        
-//        try {
-//            Query query = em.createNamedQuery("getAlleInlandsKurse");
-//            query.setParameter("HeimatHS", "SanDiego"); // Hier die ausgewählte AuslandsHS eintragen!!!!
-//            return query.getResultList();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return null;
-//        }
     }
 
     public List<Hochschule> getPartnerHS() {

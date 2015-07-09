@@ -35,9 +35,10 @@ public class LearningAgreementPosition implements Serializable {
 
     }
 
-    public LearningAgreementPosition(Kurs inlands_kurs, Kurs auslands_kurs) {
+    public LearningAgreementPosition(Kurs inlands_kurs, Kurs auslands_kurs, LearningAgreement learningAgreement) {
         this.inlands_kurs = inlands_kurs;
         this.auslands_kurs = auslands_kurs;
+        this.learningAgreement = learningAgreement;
     }
    
     public Kurs getInlands_kurs() {

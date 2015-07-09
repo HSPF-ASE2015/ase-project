@@ -6,117 +6,123 @@
                 xmlns:b="http://bootsfaces.net/ui">
     <ui:define name="title">Learning Agreement bearbeiten</ui:define>
     <ui:define name="content">
-                            <b:row>
-                                <b:column span="5">
-                                    <b:panel title="Studierender" collapsible="false" id="panel-studierender">
-                                        <b:panelGrid colSpans="5,7">
-                                            <h:outputLabel value="Name:"/>
-                                            <h:panelGroup><h:outputText value="#{studentBean.student.vorname} "/><h:outputText value="#{studentBean.student.nachname}"/></h:panelGroup>
-                                            <h:outputLabel value="Geburtsdatum:"/>
-                                            <h:outputText value="#{studentBean.student.geburtsdatum}"/>
-                                            <h:outputLabel value="Geburtsort:"/>
-                                            <h:outputText value="#{studentBean.student.geburtsort}"/>
-                                            <h:outputLabel value="Studiengang:"/>
-                                            <h:outputText value="#{studentBean.student.studiengang}"/>
-                                            <h:outputLabel value="Fakultät:"/>
-                                            <h:outputText value="#{studentBean.student.fakultaet}"/>
-                                        </b:panelGrid>
-                                    </b:panel>
-                                </b:column>
-                                <b:column span="7">
-                                    <b:panel title="Auslandssemester" collapsible="false">
-                                        <b:panelGrid colSpans="4,8">
-                                            <h:outputLabel value="Partnerhochschule:"/>
-                                            <h:outputText value="#{studentBean.student.antrag.partnerhochschule.name}" />
-                                            <h:outputLabel value="Semester:"/>
-                                            <h:outputText value="#{studentBean.student.antrag.semester}" />
-                                            <h:outputLabel value="Semesterbeginn:"/>
-                                            <h:outputText value="#{studentBean.student.antrag.startDatum}"/>
-                                            <h:outputLabel value="Semesterende:"/>
-                                            <h:outputText value="#{studentBean.student.antrag.endDatum}" />
-                                        </b:panelGrid>
-                                    </b:panel>
-                                </b:column>    
-                            </b:row>
+        <b:row>
+            <b:column span="5">
+                <b:panel title="Studierender" collapsible="false" id="panel-studierender">
+                    <b:panelGrid colSpans="5,7">
+                        <h:outputLabel value="Name:"/>
+                        <h:panelGroup><h:outputText value="#{studentBean.student.vorname} "/><h:outputText value="#{studentBean.student.nachname}"/></h:panelGroup>
+                        <h:outputLabel value="Geburtsdatum:"/>
+                        <h:outputText value="#{studentBean.student.geburtsdatum}"/>
+                        <h:outputLabel value="Geburtsort:"/>
+                        <h:outputText value="#{studentBean.student.geburtsort}"/>
+                        <h:outputLabel value="Studiengang:"/>
+                        <h:outputText value="#{studentBean.student.studiengang}"/>
+                        <h:outputLabel value="Fakultät:"/>
+                        <h:outputText value="#{studentBean.student.fakultaet}"/>
+                    </b:panelGrid>
+                </b:panel>
+            </b:column>
+            <b:column span="7">
+                <b:panel title="Auslandssemester" collapsible="false">
+                    <b:panelGrid colSpans="4,8">
+                        <h:outputLabel value="Partnerhochschule:"/>
+                        <h:outputText value="#{studentBean.student.antrag.partnerhochschule.name}" />
+                        <h:outputLabel value="Semester:"/>
+                        <h:outputText value="#{studentBean.student.antrag.semester}" />
+                        <h:outputLabel value="Semesterbeginn:"/>
+                        <h:outputText value="#{studentBean.student.antrag.startDatum}"/>
+                        <h:outputLabel value="Semesterende:"/>
+                        <h:outputText value="#{studentBean.student.antrag.endDatum}" />
+                    </b:panelGrid>
+                </b:panel>
+            </b:column>    
+        </b:row>
 
-                            <br/>
-                            <h:commandButton value="Kurs hinzufügen"
-                                             action="#{learningAgreementBean.kursHinzufuegen()}"/>
-                            <br/>
-                            <h:dataTable border="1" 
-                                         value="#{learningAgreementBean.learningAgreement.learningAgreementPositionen}"
-                                         var="position"        
-                                         columnClasses="standardTable_ColumnCentered,  standardTable_ColumnCentered,
-                                         standardTable_ColumnRight, standardTable_ColumnRight">
+        <br/>
+        
+        <h:commandButton value="Kurs hinzufügen"
+                         action="#{learningAgreementBean.kursHinzufuegen()}"/>
+        <br/>
+        <h:selectOneMenu value="">
+            <f:selectItems value="#{learningAgreementBean.alleKurse}" var="kurs"
+                           itemLabel="#{kurs.name}" itemValue="#{kurs.kursId}" />
+   		</h:selectOneMenu>
+        <br/>
+        <h:dataTable border="1" 
+                     value="#{learningAgreementBean.learningAgreement.learningAgreementPositionen}"
+                     var="position"        
+                     columnClasses="standardTable_ColumnCentered,  standardTable_ColumnCentered,
+                     standardTable_ColumnRight, standardTable_ColumnRight">
 
+            
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Course title"/>
+                </f:facet>
+                <h:outputText value="#{position.auslands_kurs.name}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="ECTS/Credits"/>
+                </f:facet>
+                <h:outputText value="#{position.auslands_kurs.ects}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Sprache"/>
+                </f:facet>
+                <h:outputText value="#{position.auslands_kurs.sprache}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Grade"/>
+                </f:facet>
+                <h:inputText value="#{position.note_ausland}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Course name in Pforzheim"/>
+                </f:facet>
+                <h:outputText value="#{position.inlands_kurs.name}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="ECTS"/>
+                </f:facet>
+                <h:outputText value="#{position.inlands_kurs.ects}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="German Grade"/>
+                </f:facet>
+                <h:inputText value="#{position.note_inland}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">
+                    <h:outputText value="Bearbeiten"/>
+                </f:facet>
+                <h:commandLink action="#{learningAgreementBean.loeschePosition()}"
+                               immediate="true">
+                    <h:outputText value="Löschen"/>
+                    <f:param name="posId" value="#{position.laPosId}"/>
+                </h:commandLink>
+            </h:column>
+        </h:dataTable>
+        <br/>
+        <h:commandButton value="Learning Agreement speichern"
+                         action="#{learningAgreementBean.speichereLearningAgreement()}"
+                         immediate="true"/>
 
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Course title"/>
-                                    </f:facet>
-                                    <h:outputText value="#{position.auslands_kurs.name}"/>
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="ECTS/Credits"/>
-                                    </f:facet>
-                                    <h:outputText value="#{position.auslands_kurs.ects}"/>
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Sprache"/>
-                                    </f:facet>
-                                    <h:outputText value="#{position.auslands_kurs.sprache}"/>
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Grade"/>
-                                    </f:facet>
-                                    <h:inputText value="#{position.note_ausland}"/>
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Course name in Pforzheim"/>
-                                    </f:facet>
-                                    <h:outputText value="#{position.inlands_kurs.name}"/>
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="ECTS"/>
-                                    </f:facet>
-                                    <h:outputText value="#{position.inlands_kurs.ects}"/>
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="German Grade"/>
-                                    </f:facet>
-                                    <h:inputText value="#{position.note_inland}"/>
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Bearbeiten"/>
-                                    </f:facet>
-                                    <h:commandLink action="#{learningAgreementBean.loeschePosition()}"
-                                                   immediate="true">
-                                        <h:outputText value="Löschen"/>
-                                        <f:param name="posId" value="#{position.laPosId}"/>
-                                    </h:commandLink>
-                                </h:column>
-                            </h:dataTable>
-                            <br/>
-                            <h:commandButton value="Learning Agreement speichern"
-                                             action="#{learningAgreementBean.speichereLearningAgreement()}"
-                                             immediate="true"/>
-
-                            <br/>
-                            <h:outputFormat value="Ausleihenummer {0}  gespeichert" rendered="#{ausleiheErfassenBean.anzeigeSpeichernMeldung}">
-                                <f:param  value="#{ausleiheErfassenBean.ausleihe.ausleiheNummer}"/>
-                            </h:outputFormat>
-                            <br/>
-                            <br/>
-                            <h:commandButton value="Beenden"
-                                             action="#{studentBean.logout()}"
-                                             immediate="true"/>
+        <br/>
+        <h:outputFormat value="Ausleihenummer {0}  gespeichert" rendered="#{ausleiheErfassenBean.anzeigeSpeichernMeldung}">
+            <f:param  value="#{ausleiheErfassenBean.ausleihe.ausleiheNummer}"/>
+        </h:outputFormat>
+        <br/>
+        <br/>
+        <h:commandButton value="Beenden"
+                         action="#{studentBean.logout()}"
+                         immediate="true"/>
 
     </ui:define>
 </ui:composition>    
