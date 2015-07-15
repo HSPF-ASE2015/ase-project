@@ -36,6 +36,11 @@ public class StudentController {
         }
     }
 
+    public void logout() {
+        this.student = null;
+        em.clear();
+    }
+    
     public StudentController() {
     }
 

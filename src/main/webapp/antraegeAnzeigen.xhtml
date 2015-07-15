@@ -2,7 +2,8 @@
 <ui:composition template="/WEB-INF/templates/masterTemplate.xhtml" xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
-                xmlns:b="http://bootsfaces.net/ui">
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:define name="title">Antrag Auslandssemester</ui:define>
     <ui:define name="content">
         <b:row>
@@ -19,26 +20,33 @@
                         <h:outputText value="#{studentBean.student.studiengang}"/>
                         <h:outputLabel value="Fakultät:"/>
                         <h:outputText value="#{studentBean.student.fakultaet}"/>
+                        <h:panelGroup></h:panelGroup>
+                        <h:panelGroup></h:panelGroup>
                     </b:panelGrid>
                 </b:panel>
             </b:column>
             <b:column span="12">
                 <b:panel title="Antrag" collapsible="false">
-                    <b:panelGrid colSpans="3,3,3,3">
-                        <h:outputLabel value="Partnerhochschule:"/>
-                        <h:outputText value="#{studentBean.student.antrag.partnerhochschule.name}" />
-                        <h:outputLabel value="Semesterbeginn:"/>
-                        <h:outputText value="#{studentBean.student.antrag.startDatum}"/>
-                        <h:outputLabel value="Semester:"/>
-                        <h:outputText value="#{studentBean.student.antrag.semester}" />
-                        
-                        <h:outputLabel value="Semesterende:"/>
-                        <h:outputText value="#{studentBean.student.antrag.endDatum}" />
-                    </b:panelGrid>
+                    <c:choose>
+                        <c:when test="#{not empty studentBean.student.antrag or studentBean.student.antrag.genehmigt}">
+                            <b:panelGrid colSpans="3,3,3,3">
+                                <h:outputLabel value="Partnerhochschule:"/>
+                                <h:outputText value="#{studentBean.student.antrag.partnerhochschule.name}" />
+                                <h:outputLabel value="Semesterbeginn:"/>
+                                <h:outputText value="#{studentBean.student.antrag.startDatum}"/>
+                                <h:outputLabel value="Semester:"/>
+                                <h:outputText value="#{studentBean.student.antrag.semester}" />
 
-                    <b:commandButton rendered="#{!studentBean.hasLearningAgreement()}" value="Learning Agreement anlegen" action="#{learningAgreementBean.learningAgreementAnlegen}" look="success" />
-                    <b:commandButton rendered="#{studentBean.hasLearningAgreement()}" value="Learning Agreement bearbeiten" action="#{learningAgreementBean.learningAgreementBearbeiten}" look="warning" />
-
+                                <h:outputLabel value="Semesterende:"/>
+                                <h:outputText value="#{studentBean.student.antrag.endDatum}" />
+                            </b:panelGrid>
+                            <b:commandButton rendered="#{!learningAgreementBean.hasLearningAgreement()}" value="Learning Agreement anlegen" action="#{learningAgreementBean.learningAgreementAnlegen}" look="success" />
+                            <b:commandButton rendered="#{learningAgreementBean.hasLearningAgreement()}" value="Learning Agreement bearbeiten" action="#{learningAgreementBean.learningAgreementBearbeiten}" look="warning" />
+                        </c:when>
+                        <c:otherwise>
+                            <b:alert severity="danger"><strong>Kein Antrag vorhanden!</strong> Ein Learning Agreement kann nur erstellt werden, wenn ein genehmigter Antrag auf ein Auslandssemester vorhanden ist.</b:alert>
+                        </c:otherwise>
+                    </c:choose>
                 </b:panel>
             </b:column>
         </b:row>

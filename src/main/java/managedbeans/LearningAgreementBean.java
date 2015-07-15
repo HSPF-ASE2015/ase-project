@@ -45,6 +45,10 @@ public class LearningAgreementBean implements Serializable {
         student = studentController.getStudent();
     }
     
+    public Boolean hasLearningAgreement() {
+        return learningAgreementController.getLearningAgreement(student)!=null;
+    }
+        
     public String learningAgreementAnlegen() {
         learningAgreement = learningAgreementController.erstelleLearningAgreement(student);
         return "learningAgreementBearbeiten";
@@ -57,13 +61,13 @@ public class LearningAgreementBean implements Serializable {
 
     public void speichereLearningAgreement() {
         learningAgreementController.speichereLearningAgreement();
-        FacesContext.getCurrentInstance().renderResponse();
+        //FacesContext.getCurrentInstance().renderResponse();
     }
 
     public void loeschePosition() {
         String posId = getRequestParameter("posId");
         System.out.println("Posititionsnummer " + posId);
-        learningAgreement = learningAgreementController.loescheLearningAgreementPosition(posId, learningAgreement);
+        learningAgreement = learningAgreementController.loescheLearningAgreementPosition(Long.parseLong(posId));
         FacesContext.getCurrentInstance().renderResponse();
     }
 

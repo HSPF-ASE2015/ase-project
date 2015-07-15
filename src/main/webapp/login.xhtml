@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:b="http://bootsfaces.net/ui"
-      xmlns:p="http://primefaces.org/ui" 
       xmlns:f="http://java.sun.com/jsf/core"
        xmlns:h="http://java.sun.com/jsf/html">
     <h:head>
@@ -14,9 +13,9 @@
         <b:container>
             <b:row>
                 <b:column span="8" offset="2">
-                    <b:panel >
-                        <h1 class="text-center">Learning Agreement</h1>
-                        <p class="text-center">Bitte melden Sie sich an.</p>
+                    <b:panel class="text-center">
+                        <h1>Learning Agreement</h1>
+                        <p>Bitte melden Sie sich an.</p>
                         <b:row rendered="false" id="login_error">
                             <b:column span="6" offset="3">
                                 <b:panel look="danger" collapsible="false" title="Anmeldefehler">
@@ -27,7 +26,7 @@
                         <h:form id="StudentLogin" prependId="false">
                             <b:row>
                                 <b:column span="6" offset="3">
-                            <b:panelGrid colSpans="4,8" >
+                            <b:panelGrid colSpans="4,8" class="text-right">
                                 <h:outputLabel for="name" value="Benutzername" />
                                 <h:panelGroup>
                                     <b:inputText id="name" required="true" value="#{studentBean.student.benutzername}"
@@ -42,7 +41,7 @@
                                 </h:panelGroup>
                                 
                             </b:panelGrid>
-                                    <b:commandButton id="login_btn" value="Login" action="#{studentBean.login}" look="primary" />
+                                    <b:commandButton id="login_btn" value="Login" action="#{studentBean.login}" look="primary" class="btn-md" />
                                 </b:column>
                             </b:row>
     </h:form>

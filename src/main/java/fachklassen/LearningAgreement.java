@@ -1,8 +1,6 @@
 package fachklassen;
 
 import java.io.Serializable;
-import java.sql.Date;
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -14,6 +12,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import org.eclipse.persistence.annotations.PrivateOwned;
 
 @Entity
 @NamedQueries({
@@ -27,6 +26,7 @@ public class LearningAgreement implements Serializable {
     private Long learningAgreementId;
 
     @OneToMany(mappedBy = "learningAgreement", cascade = CascadeType.ALL)
+    @PrivateOwned
     private List<LearningAgreementPosition> learningAgreementPositionen;
     @OneToOne
     private Antrag antrag;

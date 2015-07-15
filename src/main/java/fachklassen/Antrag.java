@@ -3,6 +3,7 @@ package fachklassen;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,9 +16,9 @@ public class Antrag implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long antragId;
     
-    @OneToOne(mappedBy = "antrag")
+    @OneToOne(mappedBy = "antrag",cascade = CascadeType.ALL)
     private LearningAgreement learningAgreement;
-    @OneToOne(mappedBy = "antrag")
+    @OneToOne
     private Student student;
     @OneToOne
     private Hochschule partnerhochschule;

@@ -3,7 +3,8 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:b="http://bootsfaces.net/ui">
+                xmlns:b="http://bootsfaces.net/ui"
+                xmlns:p="http://primefaces.org/ui" >
     <ui:define name="title">Learning Agreement bearbeiten</ui:define>
     <ui:define name="content">
         <b:row>
@@ -41,84 +42,50 @@
 
         <br/>
         
-        <h:commandButton value="Kurs hinzufügen"
-                         action="#{learningAgreementBean.kursHinzufuegen()}"/>
+        <b:commandButton value="Kurs hinzufügen"
+                         action="#{learningAgreementBean.kursHinzufuegen}"/>
         <br/>       
         <br/>
-        <h:dataTable border="1" 
-                     value="#{learningAgreementBean.learningAgreement.learningAgreementPositionen}"
-                     var="position"        
-                     columnClasses="standardTable_ColumnCentered,  standardTable_ColumnCentered,
-                     standardTable_ColumnRight, standardTable_ColumnRight">
+        <p:dataTable value="#{learningAgreementBean.learningAgreement.learningAgreementPositionen}"
+                     var="position" id="laPositionen">
 
             
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Course title"/>
-                </f:facet>
+            <p:column headerText="Kurs Partner-HS">
                 <h:outputText value="#{position.auslands_kurs.name}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="ECTS/Credits"/>
-                </f:facet>
+            </p:column>
+            <p:column headerText="ECTS">
                 <h:outputText value="#{position.auslands_kurs.ects}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Sprache"/>
-                </f:facet>
+            </p:column>
+            <p:column headerText="Sprache">
                 <h:outputText value="#{position.auslands_kurs.sprache}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Grade"/>
-                </f:facet>
-                <h:inputText value="#{position.note_ausland}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Course name in Pforzheim"/>
-                </f:facet>
+            </p:column>
+            <p:column headerText="Note">
+                <p:inputText value="#{position.note_ausland}" immediate="true"/>
+            </p:column>
+            <p:column headerText="Kurs Heimat-HS">
                 <h:outputText value="#{position.inlands_kurs.name}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="ECTS"/>
-                </f:facet>
+            </p:column>
+            <p:column headerText="ECTS">
                 <h:outputText value="#{position.inlands_kurs.ects}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="German Grade"/>
-                </f:facet>
-                <h:inputText value="#{position.note_inland}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Bearbeiten"/>
-                </f:facet>
-                <h:commandLink action="#{learningAgreementBean.loeschePosition()}"
-                               immediate="true">
-                    <h:outputText value="Löschen"/>
+            </p:column>
+            <p:column headerText="Note">
+                <p:inputText value="#{position.note_inland}" immediate="true" />
+            </p:column>
+            <p:column headerText="Löschen">
+                <h:commandButton action="#{learningAgreementBean.loeschePosition}"
+                                 immediate="true" value="X" class="btn btn-xs btn-danger">
                     <f:param name="posId" value="#{position.laPosId}"/>
-                </h:commandLink>
-            </h:column>
-        </h:dataTable>
+                </h:commandButton>
+            </p:column>
+        </p:dataTable>
         <br/>
-        <h:commandButton value="Learning Agreement speichern"
-                         action="#{learningAgreementBean.speichereLearningAgreement()}"
-                         immediate="true"/>
+        <b:commandButton value="Learning Agreement speichern"
+                         action="#{learningAgreementBean.speichereLearningAgreement}" />
 
         <br/>
         <h:outputFormat value="Ausleihenummer {0}  gespeichert" rendered="#{ausleiheErfassenBean.anzeigeSpeichernMeldung}">
             <f:param  value="#{ausleiheErfassenBean.ausleihe.ausleiheNummer}"/>
         </h:outputFormat>
-        <br/>
-        <br/>
-        <h:commandButton value="Beenden"
-                         action="#{studentBean.logout()}"
-                         immediate="true"/>
 
     </ui:define>
 </ui:composition>    

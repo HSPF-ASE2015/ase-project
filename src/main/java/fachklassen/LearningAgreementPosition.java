@@ -22,8 +22,7 @@ public class LearningAgreementPosition implements Serializable {
     private Kurs auslands_kurs;
     @ManyToOne(targetEntity = LearningAgreement.class)
     private LearningAgreement learningAgreement;
-    
-    /** TODO Enum? */
+
     @Basic
     private String note_ausland;
     @Basic

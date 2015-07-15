@@ -14,7 +14,6 @@ import fachklassen.LearningAgreementPosition;
 import fachklassen.Student;
 import java.util.ArrayList;
 import java.util.List;
-import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -22,6 +21,7 @@ import restfulServiceObjects.KursRESTServiceClient;
 import restfulServiceObjects.KursWS;
 import java.lang.reflect.Type;
 import javax.ejb.Singleton;
+import javax.ejb.Stateful;
 import javax.persistence.NoResultException;
 
 /**
@@ -38,6 +38,11 @@ public class LearningAgreementController {
     private LearningAgreement learningAgreement;
 
     public LearningAgreementController() {
+    }
+    
+    public void logout() {
+        em.clear();
+        student = null;
     }
     
     @SuppressWarnings("CallToPrintStackTrace")
@@ -67,23 +72,23 @@ public class LearningAgreementController {
         em.merge(learningAgreement);
     }
     
-    public LearningAgreement loescheLearningAgreementPosition(String posId, LearningAgreement la) {
+    public LearningAgreement loescheLearningAgreementPosition(Long posId) {
         
         int idx = 0;
-        List<LearningAgreementPosition> laPosen = la.getLearningAgreementPositionen();
+        List<LearningAgreementPosition> laPosen = learningAgreement.getLearningAgreementPositionen();
         
         for(LearningAgreementPosition laPos : laPosen){
             
-            if(laPos.getLaPosId().compareTo(Long.parseLong(posId)) == 0){
+            if(laPos.getLaPosId().compareTo(posId) == 0){
                 laPosen.remove(idx);
                 break;
             }
             idx ++;
         }
         
-        la.setLearningAgreementPositionen(laPosen);
+        learningAgreement.setLearningAgreementPositionen(laPosen);
 
-        return la;
+        return learningAgreement;
     }
     
      public List<Kurs> getAlleInlandsKurse () {

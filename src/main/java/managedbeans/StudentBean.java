@@ -37,13 +37,9 @@ public class StudentBean implements Serializable {
         // Login korrekt, dann Antrag prüfen und entsprechende Anzeige zurückgeben
         if(studentController.validateLogin(student.getBenutzername(), student.getPasswort())) {
             student=studentController.getStudent();
-//            if ( student.getAntrag().isGenehmigt() == false){
-//                return "login_fail.xhtml";
-//            } else {
-//                String anzeigeLA= fillLA();  
-//                return anzeigeLA; 
+
                 return "antraegeAnzeigen";
-//            }
+
         } else { // Login inkorrekt, Fehler anzeigen, gleiche Anzeige schalten
             UIViewRoot view = FacesContext.getCurrentInstance().getViewRoot();
             view.findComponent("login_error").setRendered(true);
@@ -52,14 +48,14 @@ public class StudentBean implements Serializable {
     }
 
     public String logout() {
-        student = new Student();
+        student = null;
+        studentController.logout();
+        learningAgreementController.logout();
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "login";
     }
     
-    public Boolean hasLearningAgreement() {
-        return learningAgreementController.getLearningAgreement(student)!=null;
-    }
+
 
     
 

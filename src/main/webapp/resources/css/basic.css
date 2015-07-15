@@ -39,3 +39,7 @@ a:hover
     float: right;
     margin-top: 25px;
 }
+
+.col-md-12 ~.col-md-12 {
+    margin-top: 30px;
+}

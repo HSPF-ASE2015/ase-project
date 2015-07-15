@@ -4,6 +4,7 @@ package fachklassen;
 import java.io.Serializable;
 import java.sql.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
@@ -20,7 +21,7 @@ public class Student implements Serializable {
     @Id
     private Long matrikelnr;
     
-    @OneToOne
+    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
     private Antrag antrag;
     
     @Basic
