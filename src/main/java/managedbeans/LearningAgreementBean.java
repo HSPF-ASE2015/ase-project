@@ -80,14 +80,17 @@ public class LearningAgreementBean implements Serializable {
     // Button von LA zu Kurs auswaehlen
     public String kursHinzufuegen() {
         inlandsKurse = learningAgreementController.getAlleInlandsKurse();
-        return "inlandskursAnzeigen.xhtml";
+        auslandsKurse = learningAgreementController.getAlleAuslandsKurse();
+        
+        //return "inlandskursAnzeigen.xhtml";
+        return "kurswahl.xhtml";
     }
 
-    public String inlandskursWaehlen() {
-        String posId = getRequestParameter("kursId");
+    public String inlandskursWaehlen(String kursId) {
+        //String posId = getRequestParameter("kursId");
 
         for (Kurs k : inlandsKurse) {
-            if (k.getKursId() == Long.parseLong(posId)) {
+            if (k.getKursId() == Long.parseLong(kursId)) {
                 inlandskurs = k;
                 break;
             }
@@ -103,15 +106,16 @@ public class LearningAgreementBean implements Serializable {
     }
 
     public String auslandkursWaehlen() {
-        String posId = getRequestParameter("kursId");
-
-        for (Kurs k : auslandsKurse) {
-            if (k.getKursId() == Long.parseLong(posId)) {
-                auslandskurs = k;
-                break;
-            }
-        }
-    
+//        String posId = getRequestParameter("kursId");
+//
+//        for (Kurs k : auslandsKurse) {
+//            if (k.getKursId() == Long.parseLong(posId)) {
+//                auslandskurs = k;
+//                break;
+//            }
+//        }
+        System.out.println("AuslandskursWaehlen");
+        if(inlandskurs != null && auslandskurs != null)
         learningAgreement.getLearningAgreementPositionen().add(new LearningAgreementPosition(inlandskurs, auslandskurs, learningAgreement));
         return "learningAgreementBearbeiten";
     }
@@ -155,6 +159,7 @@ public class LearningAgreementBean implements Serializable {
 
     public void setInlandskurs(Kurs inlandskurs) {
         this.inlandskurs = inlandskurs;
+        System.out.println("Inlandskursgespeichert");
     }
 
     public Kurs getAuslandskurs() {
@@ -163,6 +168,7 @@ public class LearningAgreementBean implements Serializable {
 
     public void setAuslandskurs(Kurs auslandskurs) {
         this.auslandskurs = auslandskurs;
+        System.out.println("Auslandskursgespeichert");
     }
     
     

@@ -60,7 +60,7 @@
                 <h:outputText value="#{position.auslands_kurs.sprache}"/>
             </p:column>
             <p:column headerText="Note">
-                <p:inputText value="#{position.note_ausland}" immediate="true"/>
+                <p:inputText value="#{position.note_ausland}" immediate="true" size="6" maxlength="6"/>
             </p:column>
             <p:column headerText="Kurs Heimat-HS">
                 <h:outputText value="#{position.inlands_kurs.name}"/>
@@ -69,7 +69,7 @@
                 <h:outputText value="#{position.inlands_kurs.ects}"/>
             </p:column>
             <p:column headerText="Note">
-                <p:inputText value="#{position.note_inland}" immediate="true" />
+                <p:inputText value="#{position.note_inland}" immediate="true" size="6" maxlength="4"/>
             </p:column>
             <p:column headerText="Löschen">
                 <h:commandButton action="#{learningAgreementBean.loeschePosition}"
