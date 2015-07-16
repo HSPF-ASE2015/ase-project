@@ -82,10 +82,6 @@
         <b:commandButton value="Learning Agreement speichern"
                          action="#{learningAgreementBean.speichereLearningAgreement}" />
 
-        <br/>
-        <h:outputFormat value="Ausleihenummer {0}  gespeichert" rendered="#{ausleiheErfassenBean.anzeigeSpeichernMeldung}">
-            <f:param  value="#{ausleiheErfassenBean.ausleihe.ausleiheNummer}"/>
-        </h:outputFormat>
 
     </ui:define>
 </ui:composition>    
