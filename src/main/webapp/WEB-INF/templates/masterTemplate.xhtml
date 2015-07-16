@@ -17,9 +17,12 @@
                 <b:row>
                     <b:column span="8" offset="2">
                         <b:panel>
-                            <h1><ui:insert name="title">Learning Agreement</ui:insert></h1>
+                            <div class="logo-container">
+                            <h:graphicImage url="./javax.faces.resource/images/hs_logo.png" />
+                            </div>
+                            <div><h1><ui:insert name="title">Learning Agreement</ui:insert></h1>
                             <b:commandButton id="btn_logout" value="Logout" action="#{studentBean.logout}" look="danger" class="btn-sm"/>
-
+                            </div>
                             <ui:insert name="content">Content</ui:insert>
                             
                         </b:panel>
