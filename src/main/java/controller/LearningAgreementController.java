@@ -91,6 +91,11 @@ public class LearningAgreementController {
         return learningAgreement;
     }
     
+    public LearningAgreement erstelleLearningAgreementPosition(Kurs inlandskurs, Kurs auslandskurs) {
+        learningAgreement.anlegenLearningAgreementPosition(inlandskurs, auslandskurs);
+        return learningAgreement;
+    }
+    
      public List<Kurs> getAlleInlandsKurse () {
         try {
             Query query = em.createNamedQuery("getKurseFromHs");

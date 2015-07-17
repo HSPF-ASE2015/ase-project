@@ -42,6 +42,10 @@ public class LearningAgreement implements Serializable {
     public LearningAgreement(Antrag antrag) {
         this.antrag = antrag;
     }
+    
+    public void anlegenLearningAgreementPosition(Kurs inlandskurs, Kurs auslandskurs) {
+        learningAgreementPositionen.add(new LearningAgreementPosition(inlandskurs, auslandskurs, this));
+    }
 
     public List<LearningAgreementPosition> getLearningAgreementPositionen() {
         return this.learningAgreementPositionen;

@@ -8,6 +8,9 @@
     <ui:define name="title">Learning Agreement bearbeiten</ui:define>
     <ui:define name="content">
         <b:row>
+            <b:column span="12">
+                <p:messages id="messages" closable="true" showIcon="false"  />
+            </b:column>
             <b:column span="5">
                 <b:panel title="Studierender" collapsible="false" id="panel-studierender">
                     <b:panelGrid colSpans="5,7">
@@ -25,7 +28,7 @@
                 </b:panel>
             </b:column>
             <b:column span="7">
-                <b:panel title="Auslandssemester" collapsible="false">
+                <b:panel title="Auslandssemester" collapsible="false" id="panel-auslandssemester">
                     <b:panelGrid colSpans="4,8">
                         <h:outputLabel value="Partnerhochschule:"/>
                         <h:outputText value="#{studentBean.student.antrag.partnerhochschule.name}" />
@@ -38,50 +41,58 @@
                     </b:panelGrid>
                 </b:panel>
             </b:column>    
+
+            <b:column span="12">
+                <p:dataTable value="#{learningAgreementBean.learningAgreement.learningAgreementPositionen}"
+                             var="position" id="laPositionen" sortBy="#{position.auslands_kurs.name}">
+                    <p:column headerText="Kurs Partner-HS">
+                        <h:outputText value="#{position.auslands_kurs.name}"/>
+                    </p:column>
+                    <p:column headerText="ECTS" width="50">
+                        <h:outputText value="#{position.auslands_kurs.ects}"/>
+                    </p:column>
+                    <p:column headerText="Sprache" width="65">
+                        <h:outputText value="#{position.auslands_kurs.sprache}"/>
+                    </p:column>
+                    <p:column headerText="Note" width="80">
+                        <p:inputText value="#{position.note_ausland}" size="6" maxlength="6">
+                            <p:ajax event="keyup" update="col_buttons" listener="#{learningAgreementBean.onNoteChange}"/>
+                        </p:inputText>
+                    </p:column>
+                    <p:column headerText="Kurs Heimat-HS">
+                        <h:outputText value="#{position.inlands_kurs.name}"/>
+                    </p:column>
+                    <p:column headerText="ECTS" width="50">
+                        <h:outputText value="#{position.inlands_kurs.ects}"/>
+                    </p:column>
+                    <p:column headerText="Note" width="70">
+                        <h:outputText value="#{position.note_inland}"/>
+                    </p:column>
+                    <p:column headerText="Löschen" width="70" class="text-center">
+                        <h:commandLink action="#{learningAgreementBean.loeschePosition}"
+                                       immediate="true" class="icon-red">
+                            <f:param name="posId" value="#{position.laPosId}"/>
+                            <b:icon name="remove"/>
+                        </h:commandLink>
+                    </p:column>
+                </p:dataTable>
+            </b:column>
+            <b:column span="12" id="col_buttons">
+
+                <b:button value="Kurs hinzufügen" onclick="$('.modalKurswahl').modal();
+                return false;"  
+                          class="pull-right" icon="plus" look="success"/>
+                <b:commandButton value="Änderungen speichern"
+                                 rendered="#{learningAgreementBean.changesUnsaved}"
+                                 action="#{learningAgreementBean.speichereLearningAgreement}"
+                                 id="btn_save"/>
+                
+            </b:column>
         </b:row>
-
-        <br/>
         
-        <b:commandButton value="Kurs hinzufügen"
-                         action="#{learningAgreementBean.kursHinzufuegen}"/>
-        <br/>       
-        <br/>
-        <p:dataTable value="#{learningAgreementBean.learningAgreement.learningAgreementPositionen}"
-                     var="position" id="laPositionen">
-
-            
-            <p:column headerText="Kurs Partner-HS">
-                <h:outputText value="#{position.auslands_kurs.name}"/>
-            </p:column>
-            <p:column headerText="ECTS">
-                <h:outputText value="#{position.auslands_kurs.ects}"/>
-            </p:column>
-            <p:column headerText="Sprache">
-                <h:outputText value="#{position.auslands_kurs.sprache}"/>
-            </p:column>
-            <p:column headerText="Note">
-                <p:inputText value="#{position.note_ausland}" immediate="true" size="6" maxlength="6"/>
-            </p:column>
-            <p:column headerText="Kurs Heimat-HS">
-                <h:outputText value="#{position.inlands_kurs.name}"/>
-            </p:column>
-            <p:column headerText="ECTS">
-                <h:outputText value="#{position.inlands_kurs.ects}"/>
-            </p:column>
-            <p:column headerText="Note">
-                <p:inputText value="#{position.note_inland}" immediate="true" size="6" maxlength="4"/>
-            </p:column>
-            <p:column headerText="Löschen">
-                <h:commandButton action="#{learningAgreementBean.loeschePosition}"
-                                 immediate="true" value="X" class="btn btn-xs btn-danger">
-                    <f:param name="posId" value="#{position.laPosId}"/>
-                </h:commandButton>
-            </p:column>
-        </p:dataTable>
-        <br/>
-        <b:commandButton value="Learning Agreement speichern"
-                         action="#{learningAgreementBean.speichereLearningAgreement}" />
-
-
+        
+        <b:modal size="modal-lg" title="Kurswahl" backdrop="false" close-on-escape="false" styleClass="modalKurswahl">
+            <ui:include src="kurswahl.xhtml" />
+        </b:modal>
     </ui:define>
 </ui:composition>    

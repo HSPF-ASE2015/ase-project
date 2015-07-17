@@ -1,71 +1,71 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<ui:composition template="/WEB-INF/templates/masterTemplate.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:h="http://xmlns.jcp.org/jsf/html"
                 xmlns:b="http://bootsfaces.net/ui"
-                xmlns:p="http://primefaces.org/ui" >
-    <ui:define name="title">Kurswahl</ui:define>
-    <ui:define name="content">
-        <b:row>
+                xmlns:p="http://primefaces.org/ui" 
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <b:row>
+        <b:column span="6">
+            <h4>Kurse der Partnerhochschule (<h:outputText value="#{learningAgreementBean.learningAgreement.antrag.partnerhochschule.name}"/>)</h4>
+            <!--<b:panel title="Kurse der Partnerhochschule" collapsible="false" id="panel-auslandskurse">-->
 
+            <p:dataTable 
+                value="#{learningAgreementBean.auslandsKurse}"
+                var="auslandskurs"
+                id="auslandskursRadio" 
+                selection="#{learningAgreementBean.selectedAuslandskurs}" 
+                rowKey="#{auslandskurs.kursId}"
+                sortBy="#{auslandskurs.name}"
+                rows="10">
+                <p:ajax event="rowSelectRadio" listener="#{learningAgreementBean.onKursSelect}" update=":laForm:btn_modal_add" />
+                <p:column selectionMode="single" style="width:37px; text-align:left"/>
+                <p:column headerText="Kursname">
+                    <h:outputText value="#{auslandskurs.name}" />
+                </p:column>
+                <p:column headerText="Sprache" style="width:70px;">
+                    <h:outputText value="#{auslandskurs.sprache}" />
+                </p:column>
+                <p:column headerText="ECTS" style="width:50px;text-align:right">
+                    <h:outputText value="#{auslandskurs.ects}" />
+                </p:column>
+            </p:dataTable>
+            <!--</b:panel>-->
+        </b:column>    
 
-            <b:column span="8">
-                <b:panel title="Auslandskurs" collapsible="false" id="panel-auslandskurse">
-                    <h:form id="auslandkurswahl">
+        <b:column span="6">
+            <h4>Kurse der Heimathochschule</h4>
+            <!--<b:panel title="Kurse der Heimathochschule" collapsible="false" id="panel-inlandskurse">-->
+            <p:dataTable 
+                value="#{learningAgreementBean.inlandsKurse}"
+                var="inlandskurs"
+                id="inlandskursRadio" 
+                selection="#{learningAgreementBean.selectedInlandskurs}" 
+                rowKey="#{inlandskurs.kursId}"
+                sortBy="#{inlandskurs.name}"
+                rows="10">
 
-                        <p:dataTable 
-                            value="#{learningAgreementBean.auslandsKurse}"
-                            var="auslandskurs"
-                            id="auslandskursRadio" 
-                            selection="#{learningAgreementBean.auslandskurs}" 
-                            rowKey="#{auslandskurs.kursId}">
-
-                            <p:column selectionMode="single" style="width:37px; text-align:left"/>
-                            <p:column headerText="Kursname">
-                                <h:outputText value="#{auslandskurs.name}" />
-                            </p:column>
-                            <p:column headerText="Sprache" style="width:70px;">
-                                <h:outputText value="#{auslandskurs.sprache}" />
-                            </p:column>
-                            <p:column headerText="ECTS" style="width:50px;text-align:right">
-                                <h:outputText value="#{auslandskurs.ects}" />
-                            </p:column>
-                        </p:dataTable>
-                    </h:form> 
-                </b:panel>
-            </b:column>    
-            
-            <b:column span="8">
-                <b:panel title="Inlandskurse" collapsible="false" id="panel-inlandskurse">
-                    <h:form id="inlandskurswahl">
-
-                        <p:dataTable 
-                            value="#{learningAgreementBean.inlandsKurse}"
-                            var="inlandskurs"
-                            id="inlandskursRadio" 
-                            selection="#{learningAgreementBean.inlandskurs}" 
-                            rowKey="#{inlandskurs.kursId}">
-
-
-                            <p:column selectionMode="single" style="width:37px; text-align:left"/>
-                            <p:column headerText="Kursname">
-                                <h:outputText value="#{inlandskurs.name}" />
-                            </p:column>
-                            <p:column headerText="Sprache" style="width:70px;">
-                                <h:outputText value="#{inlandskurs.sprache}" />
-                            </p:column>
-                            <p:column headerText="ECTS" style="width:50px;text-align:right">
-                                <h:outputText value="#{inlandskurs.ects}" />
-                            </p:column>
-                        </p:dataTable>
-                    </h:form> 
-                </b:panel>
-            </b:column>
-        </b:row>
-        <b:row>
-            <b:commandButton value="Auswahl speichern"
-                             action="#{learningAgreementBean.auslandkursWaehlen}"/>
-        </b:row>
-
-    </ui:define>
-</ui:composition>   
+                <p:ajax event="rowSelectRadio" listener="#{learningAgreementBean.onKursSelect}" update=":laForm:btn_modal_add" />
+                <p:column selectionMode="single" style="width:37px; text-align:left"/>
+                <p:column headerText="Kursname">
+                    <h:outputText value="#{inlandskurs.name}" />
+                </p:column>
+                <p:column headerText="Sprache" style="width:70px;">
+                    <h:outputText value="#{inlandskurs.sprache}" />
+                </p:column>
+                <p:column headerText="ECTS" style="width:50px;text-align:right">
+                    <h:outputText value="#{inlandskurs.ects}" />
+                </p:column>
+            </p:dataTable>
+            <!--</b:panel>-->
+        </b:column>
+    </b:row>
+    <f:facet name="footer">
+        <b:button value="Abbrechen" dismiss="modal" onclick="return false;" />
+        <h:commandButton value="Auswahl speichern"
+                         action="#{learningAgreementBean.learningAgreementPositionAnlegen}"
+                         class="btn btn-success"
+                         disabled="#{!learningAgreementBean.enabledButtonAdd}"
+                         id="btn_modal_add"/>
+    </f:facet>
+</ui:composition>

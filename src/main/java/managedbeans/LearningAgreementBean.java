@@ -4,7 +4,6 @@ import controller.LearningAgreementController;
 import controller.StudentController;
 import fachklassen.Kurs;
 import fachklassen.LearningAgreement;
-import fachklassen.LearningAgreementPosition;
 import fachklassen.Student;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -12,12 +11,11 @@ import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
+import org.primefaces.event.SelectEvent;
 
-/**
- *
- * @author joe
- */
 @Named
 @SessionScoped
 public class LearningAgreementBean implements Serializable {
@@ -26,48 +24,53 @@ public class LearningAgreementBean implements Serializable {
     private LearningAgreement learningAgreement;
     private List<Kurs> inlandsKurse;
     private List<Kurs> auslandsKurse;
-    private Kurs inlandskurs;
-    private Kurs auslandskurs;
-   
-    
+    private Kurs selectedInlandskurs;
+    private Kurs selectedAuslandskurs;
+    private Boolean enabledButtonAdd = false;
+    private Boolean changesUnsaved = false;
+
     @EJB
     private StudentController studentController;
     @EJB
     private LearningAgreementController learningAgreementController;
-    
 
     public LearningAgreementBean() {
 
     }
-    
+
     @PostConstruct
     public void init() {
         student = studentController.getStudent();
     }
-    
+
     public Boolean hasLearningAgreement() {
-        return learningAgreementController.getLearningAgreement(student)!=null;
+        return learningAgreementController.getLearningAgreement(student) != null;
     }
-        
+
     public String learningAgreementAnlegen() {
         learningAgreement = learningAgreementController.erstelleLearningAgreement(student);
+        kurseLaden();
         return "learningAgreementBearbeiten";
     }
-    
+
     public String learningAgreementBearbeiten() {
         learningAgreement = learningAgreementController.getLearningAgreement(student);
+        kurseLaden();
         return "learningAgreementBearbeiten";
     }
 
     public void speichereLearningAgreement() {
         learningAgreementController.speichereLearningAgreement();
-        //FacesContext.getCurrentInstance().renderResponse();
+        changesUnsaved = false;
+        FacesContext.getCurrentInstance().addMessage(null, 
+                new FacesMessage(FacesMessage.SEVERITY_INFO, "Learning Agreement gespeichert.", "Die Änderungen wurden erfolgreich gespeichert."));
     }
 
     public void loeschePosition() {
         String posId = getRequestParameter("posId");
         System.out.println("Posititionsnummer " + posId);
         learningAgreement = learningAgreementController.loescheLearningAgreementPosition(Long.parseLong(posId));
+        changesUnsaved = true;
         FacesContext.getCurrentInstance().renderResponse();
     }
 
@@ -77,50 +80,30 @@ public class LearningAgreementBean implements Serializable {
                 getRequestParameterMap().get(parameter);
     }
 
-    // Button von LA zu Kurs auswaehlen
-    public String kursHinzufuegen() {
+    public void kurseLaden() {
         inlandsKurse = learningAgreementController.getAlleInlandsKurse();
         auslandsKurse = learningAgreementController.getAlleAuslandsKurse();
-        
-        //return "inlandskursAnzeigen.xhtml";
-        return "kurswahl.xhtml";
     }
 
-    public String inlandskursWaehlen(String kursId) {
-        //String posId = getRequestParameter("kursId");
-
-        for (Kurs k : inlandsKurse) {
-            if (k.getKursId() == Long.parseLong(kursId)) {
-                inlandskurs = k;
-                break;
-            }
+    public String learningAgreementPositionAnlegen() {
+        if (selectedInlandskurs != null && selectedAuslandskurs != null) {
+            learningAgreement = learningAgreementController.erstelleLearningAgreementPosition(selectedInlandskurs, selectedAuslandskurs);
+            selectedAuslandskurs = null;
+            selectedInlandskurs = null;
+            enabledButtonAdd = false;
+            changesUnsaved = true;
         }
-        
-        auslandsKurse = learningAgreementController.getAlleAuslandsKurse();
-        
-        if(!auslandsKurse.isEmpty()) {
-            return "auslandskursAnzeigen.xhtml";
-        } else {
-            return null; // TODO: Error page 
-        }
-    }
-
-    public String auslandkursWaehlen() {
-//        String posId = getRequestParameter("kursId");
-//
-//        for (Kurs k : auslandsKurse) {
-//            if (k.getKursId() == Long.parseLong(posId)) {
-//                auslandskurs = k;
-//                break;
-//            }
-//        }
-        System.out.println("AuslandskursWaehlen");
-        if(inlandskurs != null && auslandskurs != null)
-        learningAgreement.getLearningAgreementPositionen().add(new LearningAgreementPosition(inlandskurs, auslandskurs, learningAgreement));
         return "learningAgreementBearbeiten";
     }
+
+    public void onKursSelect(SelectEvent event) {
+        enabledButtonAdd = selectedInlandskurs != null && selectedAuslandskurs != null;
+    }
     
-    
+    public void onNoteChange () {
+        changesUnsaved = true;
+    }
+
     public Student getStudent() {
         return student;
     }
@@ -136,7 +119,7 @@ public class LearningAgreementBean implements Serializable {
     public void setLearningAgreement(LearningAgreement learningAgreement) {
         this.learningAgreement = learningAgreement;
     }
-    
+
     public List<Kurs> getInlandsKurse() {
         return inlandsKurse;
     }
@@ -153,23 +136,39 @@ public class LearningAgreementBean implements Serializable {
         this.auslandsKurse = auslandsKurse;
     }
 
-    public Kurs getInlandskurs() {
-        return inlandskurs;
+    public Kurs getSelectedInlandskurs() {
+        return selectedInlandskurs;
     }
 
-    public void setInlandskurs(Kurs inlandskurs) {
-        this.inlandskurs = inlandskurs;
+    public void setSelectedInlandskurs(Kurs selectedInlandskurs) {
+        this.selectedInlandskurs = selectedInlandskurs;
         System.out.println("Inlandskursgespeichert");
     }
 
-    public Kurs getAuslandskurs() {
-        return auslandskurs;
+    public Kurs getSelectedAuslandskurs() {
+        return selectedAuslandskurs;
     }
 
-    public void setAuslandskurs(Kurs auslandskurs) {
-        this.auslandskurs = auslandskurs;
+    public void setSelectedAuslandskurs(Kurs selectedAuslandskurs) {
+        this.selectedAuslandskurs = selectedAuslandskurs;
         System.out.println("Auslandskursgespeichert");
     }
+
+    public Boolean getEnabledButtonAdd() {
+        return enabledButtonAdd;
+    }
+
+    public void setEnabledButtonAdd(Boolean enabledButtonAdd) {
+        this.enabledButtonAdd = enabledButtonAdd;
+    }
+
+    public Boolean getChangesUnsaved() {
+        return changesUnsaved;
+    }
+
+    public void setChangesUnsaved(Boolean changesUnsaved) {
+        this.changesUnsaved = changesUnsaved;
+    }
     
-    
+
 }
