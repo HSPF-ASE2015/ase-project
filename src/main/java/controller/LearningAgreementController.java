@@ -36,6 +36,8 @@ public class LearningAgreementController {
     private EntityManager em;
     private Student student;
     private LearningAgreement learningAgreement;
+    
+    private final String HeimatHs = "Pforzheim";
 
     public LearningAgreementController() {
     }
@@ -99,7 +101,8 @@ public class LearningAgreementController {
      public List<Kurs> getAlleInlandsKurse () {
         try {
             Query query = em.createNamedQuery("getKurseFromHs");
-            query.setParameter("HS", "Pforzheim"); // Hier die Heimathochschule eintragen!!!!
+            //query.setParameter("HS", "Pforzheim");
+            query.setParameter("HS", HeimatHs);
             return query.getResultList();
 
         } catch (Exception e) {
