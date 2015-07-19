@@ -163,16 +163,16 @@ public class LearningAgreementController {
         kursRESTServiceClient.close();       
     }
 
-    public List<Hochschule> getPartnerHS() {
-        try {
-            Query query = em.createNamedQuery("getPartnerHS");
-            query.setParameter("HeimatHS", "Pforzheim"); // Hier die Heimathochschule eintragen!!!!
-            return query.getResultList();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+//    public List<Hochschule> getPartnerHS() {
+//        try {
+//            Query query = em.createNamedQuery("getPartnerHS");
+//            query.setParameter("HeimatHS", "Pforzheim"); // Hier die Heimathochschule eintragen!!!!
+//            return query.getResultList();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
     
 }
