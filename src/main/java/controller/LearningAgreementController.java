@@ -74,21 +74,11 @@ public class LearningAgreementController {
         em.merge(learningAgreement);
     }
     
-    public LearningAgreement loescheLearningAgreementPosition(Long posId) {
+    public LearningAgreement loescheLearningAgreementPosition(int posIdx) {
         
-        int idx = 0;
-        List<LearningAgreementPosition> laPosen = learningAgreement.getLearningAgreementPositionen();
-        
-        for(LearningAgreementPosition laPos : laPosen){
-            
-            if(laPos.getLaPosId().compareTo(posId) == 0){
-                laPosen.remove(idx);
-                break;
-            }
-            idx ++;
-        }
-        
-        learningAgreement.setLearningAgreementPositionen(laPosen);
+        List<LearningAgreementPosition> laPositionen = learningAgreement.getLearningAgreementPositionen();   
+        laPositionen.remove(posIdx);
+        learningAgreement.setLearningAgreementPositionen(laPositionen);
 
         return learningAgreement;
     }
@@ -101,7 +91,6 @@ public class LearningAgreementController {
      public List<Kurs> getAlleInlandsKurse () {
         try {
             Query query = em.createNamedQuery("getKurseFromHs");
-            //query.setParameter("HS", "Pforzheim");
             query.setParameter("HS", HeimatHs);
             return query.getResultList();
 
@@ -165,17 +154,5 @@ public class LearningAgreementController {
         }     
         kursRESTServiceClient.close();       
     }
-
-//    public List<Hochschule> getPartnerHS() {
-//        try {
-//            Query query = em.createNamedQuery("getPartnerHS");
-//            query.setParameter("HeimatHS", "Pforzheim"); // Hier die Heimathochschule eintragen!!!!
-//            return query.getResultList();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return null;
-//        }
-//    }
     
 }

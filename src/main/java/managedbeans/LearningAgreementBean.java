@@ -67,8 +67,7 @@ public class LearningAgreementBean implements Serializable {
 
     public void loeschePosition() {
         String posId = getRequestParameter("posId");
-        System.out.println("Posititionsnummer " + posId);
-        learningAgreement = learningAgreementController.loescheLearningAgreementPosition(Long.parseLong(posId));
+        learningAgreement = learningAgreementController.loescheLearningAgreementPosition(Integer.parseInt(posId));
         changesUnsaved = true;
         FacesContext.getCurrentInstance().renderResponse();
     }
@@ -168,6 +167,5 @@ public class LearningAgreementBean implements Serializable {
     public void setChangesUnsaved(Boolean changesUnsaved) {
         this.changesUnsaved = changesUnsaved;
     }
-    
 
 }

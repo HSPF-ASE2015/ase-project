@@ -71,7 +71,7 @@
                     <p:column headerText="Löschen" width="70" class="text-center">
                         <h:commandLink action="#{learningAgreementBean.loeschePosition}"
                                        immediate="true" class="icon-red">
-                            <f:param name="posId" value="#{position.laPosId}"/>
+                            <f:param name="posId" value="#{learningAgreementBean.learningAgreement.learningAgreementPositionen.indexOf(position)}"/>
                             <b:icon name="remove"/>
                         </h:commandLink>
                     </p:column>
@@ -80,17 +80,17 @@
             <b:column span="12" id="col_buttons">
 
                 <b:button value="Kurs hinzufügen" onclick="$('.modalKurswahl').modal();
-                return false;"  
+                        return false;"  
                           class="pull-right" icon="plus" look="success"/>
                 <b:commandButton value="Änderungen speichern"
                                  rendered="#{learningAgreementBean.changesUnsaved}"
                                  action="#{learningAgreementBean.speichereLearningAgreement}"
                                  id="btn_save"/>
-                
+
             </b:column>
         </b:row>
-        
-        
+
+
         <b:modal size="modal-lg" title="Kurswahl" backdrop="false" close-on-escape="false" styleClass="modalKurswahl">
             <ui:include src="kurswahl.xhtml" />
         </b:modal>
