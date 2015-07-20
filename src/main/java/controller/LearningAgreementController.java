@@ -37,7 +37,6 @@ public class LearningAgreementController {
 
     @PersistenceContext
     private EntityManager em;
-    private Student student;
     private LearningAgreement learningAgreement;
 
     private final String HeimatHs = "Pforzheim";
@@ -47,7 +46,6 @@ public class LearningAgreementController {
 
     public void logout() {
         em.clear();
-        student = null;
     }
 
     @SuppressWarnings("CallToPrintStackTrace")
