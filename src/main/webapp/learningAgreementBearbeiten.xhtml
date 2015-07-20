@@ -71,7 +71,7 @@
                     <p:column headerText="Löschen" width="70" class="text-center">
                         <h:commandLink action="#{learningAgreementBean.loeschePosition}"
                                        immediate="true" class="icon-red">
-                            <f:param name="posId" value="#{learningAgreementBean.learningAgreement.learningAgreementPositionen.indexOf(position)}"/>
+                            <f:param name="posIdx" value="#{learningAgreementBean.learningAgreement.learningAgreementPositionen.indexOf(position)}"/>
                             <b:icon name="remove"/>
                         </h:commandLink>
                     </p:column>

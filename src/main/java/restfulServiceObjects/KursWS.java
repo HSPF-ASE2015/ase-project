@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author Jeroen
+ * 
  */
 public class KursWS implements Serializable{
     

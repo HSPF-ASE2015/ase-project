@@ -19,7 +19,6 @@ import javax.ws.rs.client.WebTarget;
  *        client.close();
  * </pre>
  *
- * @author Jeroen
  */
 public class KursRESTServiceClient {
     private final WebTarget webTarget;

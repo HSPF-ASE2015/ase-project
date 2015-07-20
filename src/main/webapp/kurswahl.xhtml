@@ -19,14 +19,14 @@
                 sortBy="#{auslandskurs.name}"
                 rows="10">
                 <p:ajax event="rowSelectRadio" listener="#{learningAgreementBean.onKursSelect}" update=":laForm:btn_modal_add" />
-                <p:column selectionMode="single" style="width:37px; text-align:left"/>
-                <p:column headerText="Kursname">
+                <p:column selectionMode="single" width="37"/>
+                <p:column headerText="Kursname" >
                     <h:outputText value="#{auslandskurs.name}" />
                 </p:column>
-                <p:column headerText="Sprache" style="width:70px;">
+                <p:column headerText="Sprache" width="20%">
                     <h:outputText value="#{auslandskurs.sprache}" />
                 </p:column>
-                <p:column headerText="ECTS" style="width:50px;text-align:right">
+                <p:column headerText="ECTS" width="12%">
                     <h:outputText value="#{auslandskurs.ects}" />
                 </p:column>
             </p:dataTable>
@@ -46,14 +46,14 @@
                 rows="10">
 
                 <p:ajax event="rowSelectRadio" listener="#{learningAgreementBean.onKursSelect}" update=":laForm:btn_modal_add" />
-                <p:column selectionMode="single" style="width:37px; text-align:left"/>
+                <p:column selectionMode="single" width="37"/>
                 <p:column headerText="Kursname">
                     <h:outputText value="#{inlandskurs.name}" />
                 </p:column>
-                <p:column headerText="Sprache" style="width:70px;">
+                <p:column headerText="Sprache" width="20%">
                     <h:outputText value="#{inlandskurs.sprache}" />
                 </p:column>
-                <p:column headerText="ECTS" style="width:50px;text-align:right">
+                <p:column headerText="ECTS" width="12%">
                     <h:outputText value="#{inlandskurs.ects}" />
                 </p:column>
             </p:dataTable>

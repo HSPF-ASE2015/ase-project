@@ -28,7 +28,7 @@
             <b:column span="12">
                 <b:panel title="Antrag" collapsible="false">
                     <c:choose>
-                        <c:when test="#{not empty studentBean.student.antrag or studentBean.student.antrag.genehmigt}">
+                        <c:when test="#{not empty studentBean.student.antrag and studentBean.student.antrag.genehmigt}">
                             <b:panelGrid colSpans="3,3,3,3">
                                 <h:outputLabel value="Partnerhochschule:"/>
                                 <h:outputText value="#{studentBean.student.antrag.partnerhochschule.name}" />

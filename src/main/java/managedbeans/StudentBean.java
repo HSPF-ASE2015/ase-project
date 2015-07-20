@@ -13,7 +13,7 @@ import javax.inject.Named;
 
 /**
  *
- * @author Marcel
+ * 
  */
 @Named
 @SessionScoped
@@ -54,10 +54,6 @@ public class StudentBean implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "login";
     }
-    
-
-
-    
 
     public LearningAgreement getLA() {
         return learningAgreement;

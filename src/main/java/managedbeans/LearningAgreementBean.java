@@ -2,6 +2,7 @@ package managedbeans;
 
 import controller.LearningAgreementController;
 import controller.StudentController;
+import exceptions.WSException;
 import fachklassen.Kurs;
 import fachklassen.LearningAgreement;
 import fachklassen.Student;
@@ -61,13 +62,13 @@ public class LearningAgreementBean implements Serializable {
     public void speichereLearningAgreement() {
         learningAgreementController.speichereLearningAgreement();
         changesUnsaved = false;
-        FacesContext.getCurrentInstance().addMessage(null, 
+        FacesContext.getCurrentInstance().addMessage(null,
                 new FacesMessage(FacesMessage.SEVERITY_INFO, "Learning Agreement gespeichert.", "Die Änderungen wurden erfolgreich gespeichert."));
     }
 
     public void loeschePosition() {
-        String posId = getRequestParameter("posId");
-        learningAgreement = learningAgreementController.loescheLearningAgreementPosition(Integer.parseInt(posId));
+        String posIdx = getRequestParameter("posIdx");
+        learningAgreement = learningAgreementController.loescheLearningAgreementPosition(Integer.parseInt(posIdx));
         changesUnsaved = true;
         FacesContext.getCurrentInstance().renderResponse();
     }
@@ -79,8 +80,14 @@ public class LearningAgreementBean implements Serializable {
     }
 
     public void kurseLaden() {
+
         inlandsKurse = learningAgreementController.getAlleInlandsKurse();
-        auslandsKurse = learningAgreementController.getAlleAuslandsKurse();
+        try {
+            auslandsKurse = learningAgreementController.getAlleAuslandsKurse();
+        } catch (WSException ex) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage(FacesMessage.SEVERITY_ERROR, "Auslandskurse konnten nicht über Webservice geladen werden.", ex.getMessage()));
+        }
     }
 
     public String learningAgreementPositionAnlegen() {
@@ -97,8 +104,8 @@ public class LearningAgreementBean implements Serializable {
     public void onKursSelect(SelectEvent event) {
         enabledButtonAdd = selectedInlandskurs != null && selectedAuslandskurs != null;
     }
-    
-    public void onNoteChange () {
+
+    public void onNoteChange() {
         changesUnsaved = true;
     }
 
