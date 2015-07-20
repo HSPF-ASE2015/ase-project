@@ -14,7 +14,7 @@ import javax.persistence.OneToOne;
 @Entity
 @NamedQueries({
     @NamedQuery(name="getKurseFromHs", query="Select k from Kurs k where k.hochschule.name = :HS"),
-        @NamedQuery(name="getKurs", query="Select k from Kurs k where k.kursId = :wahlKurs")
+    @NamedQuery(name="getKurs", query="Select k from Kurs k where k.kursId = :wahlKurs")
  })
 public class Kurs implements Serializable {
     @Id
